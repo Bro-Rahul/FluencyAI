@@ -1,3 +1,5 @@
-/backend
+/test
 /frontend/node_modules
 /frontend/.next
+/backend/.venv
+/backend/.env

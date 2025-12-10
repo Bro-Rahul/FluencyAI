@@ -2,7 +2,7 @@ from fastapi.responses import Response
 from fastapi import FastAPI,Depends
 from sqlalchemy.orm import Session
 from api.db import get_db
-from api.db.model import User
+from api.db.model import Users
 
 app = FastAPI()
 
@@ -14,4 +14,4 @@ def hellow():
 
 @app.get("/users")
 def get_users(db: Session = Depends(get_db)):
-    return db.query(User).all()
+    return db.query(Users).all()

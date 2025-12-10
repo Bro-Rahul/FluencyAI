@@ -1,8 +1,8 @@
-"""initial migration
+"""added the sessions model to track the user speech
 
-Revision ID: ae76719ca59c
-Revises: 
-Create Date: 2025-12-09 19:52:09.829894
+Revision ID: 0969daca6963
+Revises: e058d56755c4
+Create Date: 2025-12-10 23:54:29.355231
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ae76719ca59c'
-down_revision: Union[str, Sequence[str], None] = None
+revision: str = '0969daca6963'
+down_revision: Union[str, Sequence[str], None] = 'e058d56755c4'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

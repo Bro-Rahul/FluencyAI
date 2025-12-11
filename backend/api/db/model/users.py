@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column,relationship
 from sqlalchemy.sql import func
 from sqlalchemy import String, Integer, TIMESTAMP,UUID
 from api.db import Base
@@ -31,7 +31,7 @@ class Users(Base):
 
     avatar: Mapped[str] = mapped_column(
         String,
-        nullable=False
+        nullable=True,
     )
 
     score: Mapped[int] = mapped_column(
@@ -42,4 +42,9 @@ class Users(Base):
     created_at: Mapped[str] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now()
+    )
+
+    sessions: Mapped[list["Sessions"]] = relationship( # type: ignore
+        "Sessions",
+        back_populates="user"
     )

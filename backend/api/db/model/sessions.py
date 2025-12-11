@@ -29,4 +29,4 @@ class Sessions(Base):
         nullable=False,
     )
 
-    user: Mapped["user"] = relationship(back_populates="sessions") # type: ignore
+    user: Mapped["Users"] = relationship("Users", back_populates="sessions") # type: ignore

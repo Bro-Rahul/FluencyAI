@@ -8,7 +8,15 @@
 
 ## Backend Tasks
 - [X] Setup the basic FastApi project structure.
-- [X] Create and Endpoint 
+- [X] Create an Basic Endpoint 
+
+### User Endpoints 
+- [X] Create the Users `CRUD` Endpoints
+
+### Authentication Endpoints 
+- [X] Create the authentication endpoints which is going to login the user
+- [X] Add the social Auth feature `Optional for now`
+
 
 
 ## Database Schema

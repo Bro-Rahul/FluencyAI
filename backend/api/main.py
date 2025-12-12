@@ -1,9 +1,9 @@
 from fastapi import FastAPI,Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes.users import routes as user_routes
-from pydantic import ValidationError
 from fastapi.exceptions import RequestValidationError
+from api.routes.users import user_routes
+from api.routes.sessions import session_routes
 
 
 
@@ -20,6 +20,8 @@ app.add_middleware(
 
 
 app.include_router(user_routes.routes)
+app.include_router(session_routes.routes)
+
 
 
 @app.exception_handler(RequestValidationError)

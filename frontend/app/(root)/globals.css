@@ -120,3 +120,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components{
+/* Chrome / Edge / Safari */
+.audio-dark::-webkit-media-controls-panel {
+  background-color: #111827 !important;  /* gray-900 */
+  color: #e5e7eb !important;             /* gray-200 for text */
+}
+
+.audio-dark::-webkit-media-controls-play-button,
+.audio-dark::-webkit-media-controls-pause-button {
+  background-color: #111827 !important;  /* gray-900 */
+  border-radius: 50%;
+}
+
+.audio-dark::-webkit-media-controls-timeline {
+  background-color: #1f2937 !important;  /* gray-800 (slight contrast) */
+}
+
+.audio-dark::-webkit-media-controls-current-time-display,
+.audio-dark::-webkit-media-controls-time-remaining-display {
+  color: #e5e7eb !important;             /* gray-200 */
+}
+
+}

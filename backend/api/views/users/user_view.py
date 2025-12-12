@@ -1,4 +1,4 @@
-from api.validators.users import CreateUserValidator
+from api.validators.users_validator import CreateUserValidator
 from sqlalchemy.orm import Session
 from api.db.model import Users
 from api.utils.hasher import Hasher

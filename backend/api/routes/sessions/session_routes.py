@@ -10,6 +10,9 @@ import tempfile
 
 
 routes = APIRouter(prefix='/sessions')
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model_size="medium" if device=="cuda" else "small"
+compute_type="float16" if device=="cuda" else "int8"
 
 @routes.get("/")
 def get_all_sessions(db:Annotated[Session,Depends(get_db)]):
@@ -18,7 +21,7 @@ def get_all_sessions(db:Annotated[Session,Depends(get_db)]):
 
 
 async def stream(audio_bytes: bytes):
-    model = WhisperModel("small", device="cpu", compute_type="int8") 
+    model = WhisperModel(model_size, device=device, compute_type=compute_type) 
 
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp:
         tmp.write(audio_bytes)

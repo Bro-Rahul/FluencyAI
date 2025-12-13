@@ -3,9 +3,11 @@
 /frontend/.next
 /backend/.venv
 /backend/.env
+/api/__pycache__
 /frontend/.env
 **/__pycache__/
-backend/api/__pycache__
+
 __pycache__/
 *.pyc
 *.pyo
+**.pyc

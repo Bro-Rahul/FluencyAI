@@ -1,20 +1,12 @@
 import { metrics } from "@/constants/data"
-import { RenderSVG } from "@/constants/data"
-import { Check } from "lucide-react"
+import Image from "next/image"
 
-
-const RightSVG = () => {
-    return <span className="bg-green-500 rounded-full w-4 h-4 inline-flex items-center justify-center">
-        <Check color="black" size={10} />
-    </span>
-}
 
 const SpeechScoreMatrix = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#1c1f27] rounded-xl p-6 border border-[#282e39] flex flex-col items-center gap-6 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-[#135bec] to-[#3b82f6]" />
-                <h3 className="text-white font-bold text-lg self-start">Overall Score</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
+            <div className="bg-[#1c1f27] rounded-xl p-6 border-t-2 border-2 border-t-[#135bec] border-[#282e39] flex flex-col items-center gap-6 relative">
+                <h3 className="text-white font-bold text-lg self-center">Overall Score</h3>
 
                 <div className="relative size-44 flex items-center justify-center">
                     <svg className="w-full h-full -rotate-90">
@@ -38,7 +30,7 @@ const SpeechScoreMatrix = () => {
                     </div>
                 </div>
 
-                <p className="text-[#d1d5db] text-sm text-center">
+                <p className="text-[#d1d5db]  text-sm text-center">
                     Great performance! Focus on reducing pauses to improve fluency.
                 </p>
             </div>
@@ -48,8 +40,15 @@ const SpeechScoreMatrix = () => {
                     {metrics.map(metric => (
                         <div key={metric.label} className="mb-4">
                             <div className="flex justify-between text-sm mb-1">
-                                <RightSVG />
-                                <span className="text-white">{metric.label}</span>
+                                <span className="text-white inline-flex gap-x-2 items-center">
+                                    <Image
+                                        src={metric.icons}
+                                        alt="this is svg"
+                                        width={20}
+                                        height={20}
+                                        priority
+                                    />
+                                    {metric.label}</span>
                                 <span className="text-white">{metric.value}%</span>
                             </div>
                             <div className="h-2 bg-[#282e39] rounded-full">

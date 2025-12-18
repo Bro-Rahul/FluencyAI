@@ -14,7 +14,7 @@ const PracticePage = () => {
         fetchData(audioFile?.item(0)!, (streamText) => setStreamData(pre => pre + " \n" + streamText));
     }
     return (
-        <div className="min-h-screen bg-gray-900 text-white px-6 py-10">
+        <div className="min-h-screen text-white px-6 py-10">
             <AudioPlayer
                 audioTranscriptString={streamData}
                 audioFile={audioFile}

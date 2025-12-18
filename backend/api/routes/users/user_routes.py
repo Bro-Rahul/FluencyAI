@@ -7,7 +7,7 @@ from api.validators.users_validator import CreateUserValidator
 from api.views.users import user_view
 
 
-routes = APIRouter(prefix="/users")
+routes = APIRouter()
 
 
 @routes.get("/")

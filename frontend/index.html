@@ -1,0 +1,338 @@
+<html class="">
+
+<head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style"
+        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+        onload="this.rel='stylesheet'" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <title>Detailed Final Score Page</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+
+<body>
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#111318] dark group/design-root overflow-x-hidden"
+        style='font-family: Inter, "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#282e39] px-10 py-3">
+                <div class="flex items-center gap-4 text-white">
+                    <div class="size-4">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                                fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">LinguaSpeak</h2>
+                </div>
+                <div class="flex flex-1 justify-end gap-8">
+                    <div class="flex items-center gap-9">
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Home</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Practice</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Lessons</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Community</a>
+                    </div>
+                    <button
+                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#282e39] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                        <div class="text-white" data-icon="Bell" data-size="20px" data-weight="regular">
+                            <svg fill="currentColor" height="20px" viewbox="0 0 256 256" width="20px"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOKoupCKiQEz52C0w8d-DoV5_JDaPEE2qqAQdYuLLsor-fjtUIMqSuWB4Gk4cSW0GPkpDY3sxh81Fvjk5ICsEiUi1ZKry-1X5eP9dmdEVcCAEqaitWM-yiarZD6p1dVHa2PD88zRQI2Y9ZgszWwe9ZMBJoxZ00Qd7WKKnMMEVWfA5saPyjT1Snj4laAEip3F_rFTh665TXAEliENf8dn02B7HW1r29lDIGbTbFzAxIyunw5WA3i9NqeyY7nk4aLZRBtsJ2JJipfMqW");'>
+                    </div>
+                </div>
+            </header>
+            <div class="px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <div class="flex flex-wrap justify-between items-end gap-3 p-4">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-white tracking-light text-[32px] font-bold leading-tight">Session Report</p>
+                            <p class="text-[#9da6b9] text-sm font-medium">October 26, 2023 • 10:45 AM • Practice Session
+                                #42</p>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">
+                            <span>New Session</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div class="flex gap-8 border-b border-[#282e39] px-4 mt-2 mb-6">
+                        <button
+                            class="pb-3 border-b-2 border-[#135bec] text-white font-medium text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">analytics</span>
+                            Final Score
+                        </button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-[#9da6b9] hover:text-white hover:border-[#3b4354] transition-all font-medium text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">description</span>
+                            Transcript
+                        </button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-[#9da6b9] hover:text-white hover:border-[#3b4354] transition-all font-medium text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">tips_and_updates</span>
+                            Suggestions
+                        </button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-[#9da6b9] hover:text-white hover:border-[#3b4354] transition-all font-medium text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">equalizer</span>
+                            Metrics
+                        </button>
+                    </div>
+                    <div class="flex flex-col gap-6 px-4 pb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div
+                                class="md:col-span-1 bg-[#1c1f27] rounded-xl p-6 border border-[#282e39] flex flex-col items-center justify-between gap-6 shadow-sm relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#135bec] to-[#3b82f6]">
+                                </div>
+                                <h3 class="text-white font-bold text-lg self-start">Overall Score</h3>
+                                <div class="relative size-44 flex items-center justify-center my-2">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="88" cy="88" fill="transparent" r="76" stroke="#282e39"
+                                            stroke-width="12"></circle>
+                                        <circle cx="88" cy="88" fill="transparent" r="76" stroke="#135bec"
+                                            stroke-dasharray="477" stroke-dashoffset="71" stroke-linecap="round"
+                                            stroke-width="12"></circle>
+                                    </svg>
+                                    <div class="absolute flex flex-col items-center">
+                                        <span class="text-5xl font-black text-white tracking-tighter">85</span>
+                                        <span
+                                            class="text-sm font-bold text-[#135bec] uppercase tracking-wide mt-1">Excellent</span>
+                                    </div>
+                                </div>
+                                <div class="bg-[#282e39]/30 rounded-lg p-4 w-full border border-[#282e39]">
+                                    <p class="text-[#d1d5db] text-sm leading-relaxed text-center">
+                                        "Great performance! Your <span class="text-white font-bold">pronunciation</span>
+                                        and <span class="text-white font-bold">pacing</span> are strong assets. Focus on
+                                        reducing pauses to boost your fluency score."
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="md:col-span-2 bg-[#1c1f27] rounded-xl p-6 border border-[#282e39] flex flex-col justify-center gap-5 shadow-sm">
+                                <div class="flex justify-between items-center pb-2 border-b border-[#282e39]">
+                                    <h3 class="text-white font-bold text-lg">Performance Breakdown</h3>
+                                    <span class="text-xs text-[#9da6b9] font-medium bg-[#282e39] px-2 py-1 rounded">5
+                                        Metrics Analyzed</span>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between text-sm font-medium mb-0.5">
+                                        <span class="text-white flex items-center gap-2"><span
+                                                class="material-symbols-outlined text-[16px] text-[#22c55e]">check_circle</span>Grammar
+                                            Accuracy</span>
+                                        <span class="text-[#22c55e]">92%</span>
+                                    </div>
+                                    <div class="h-2.5 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                        <div
+                                            class="h-full bg-[#22c55e] w-[92%] rounded-full shadow-[0_0_8px_rgba(34,197,94,0.3)]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between text-sm font-medium mb-0.5">
+                                        <span class="text-white flex items-center gap-2"><span
+                                                class="material-symbols-outlined text-[16px] text-[#3b82f6]">record_voice_over</span>Pronunciation</span>
+                                        <span class="text-[#3b82f6]">88%</span>
+                                    </div>
+                                    <div class="h-2.5 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                        <div
+                                            class="h-full bg-[#3b82f6] w-[88%] rounded-full shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between text-sm font-medium mb-0.5">
+                                        <span class="text-white flex items-center gap-2"><span
+                                                class="material-symbols-outlined text-[16px] text-[#eab308]">stream</span>Fluency</span>
+                                        <span class="text-[#eab308]">76%</span>
+                                    </div>
+                                    <div class="h-2.5 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                        <div
+                                            class="h-full bg-[#eab308] w-[76%] rounded-full shadow-[0_0_8px_rgba(234,179,8,0.3)]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between text-sm font-medium mb-0.5">
+                                        <span class="text-white flex items-center gap-2"><span
+                                                class="material-symbols-outlined text-[16px] text-[#8b5cf6]">speed</span>Pacing</span>
+                                        <span class="text-[#8b5cf6]">95%</span>
+                                    </div>
+                                    <div class="h-2.5 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                        <div
+                                            class="h-full bg-[#8b5cf6] w-[95%] rounded-full shadow-[0_0_8px_rgba(139,92,246,0.3)]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between text-sm font-medium mb-0.5">
+                                        <span class="text-white flex items-center gap-2"><span
+                                                class="material-symbols-outlined text-[16px] text-[#ec4899]">psychology</span>Confidence</span>
+                                        <span class="text-[#ec4899]">82%</span>
+                                    </div>
+                                    <div class="h-2.5 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                        <div
+                                            class="h-full bg-[#ec4899] w-[82%] rounded-full shadow-[0_0_8px_rgba(236,72,153,0.3)]">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div
+                                class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-2 hover:border-[#3b4354] transition-colors">
+                                <div class="flex items-center gap-2 text-[#9da6b9]">
+                                    <span class="material-symbols-outlined text-[20px]">timer</span>
+                                    <span class="text-xs font-bold uppercase tracking-wider">Duration</span>
+                                </div>
+                                <p class="text-xl font-bold text-white">02:14</p>
+                            </div>
+                            <div
+                                class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-2 hover:border-[#8b5cf6] transition-colors">
+                                <div class="flex items-center gap-2 text-[#9da6b9]">
+                                    <span class="material-symbols-outlined text-[20px] text-[#8b5cf6]">speed</span>
+                                    <span class="text-xs font-bold uppercase tracking-wider">Avg Pace</span>
+                                </div>
+                                <p class="text-xl font-bold text-white">120 <span
+                                        class="text-sm font-normal text-[#9da6b9]">wpm</span></p>
+                            </div>
+                            <div
+                                class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-2 hover:border-[#eab308] transition-colors">
+                                <div class="flex items-center gap-2 text-[#9da6b9]">
+                                    <span class="material-symbols-outlined text-[20px] text-[#eab308]">graphic_eq</span>
+                                    <span class="text-xs font-bold uppercase tracking-wider">Fillers</span>
+                                </div>
+                                <p class="text-xl font-bold text-white">3 <span
+                                        class="text-sm font-normal text-[#9da6b9]">detected</span></p>
+                            </div>
+                            <div
+                                class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-2 hover:border-orange-500 transition-colors">
+                                <div class="flex items-center gap-2 text-[#9da6b9]">
+                                    <span
+                                        class="material-symbols-outlined text-[20px] text-orange-500">local_fire_department</span>
+                                    <span class="text-xs font-bold uppercase tracking-wider">Streak</span>
+                                </div>
+                                <p class="text-xl font-bold text-white">5 <span
+                                        class="text-sm font-normal text-[#9da6b9]">Days</span></p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
+                            <div class="bg-[#1c1f27] rounded-xl border border-[#282e39] overflow-hidden flex flex-col">
+                                <div
+                                    class="p-4 border-b border-[#282e39] flex justify-between items-center bg-[#222731]">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-yellow-500">lightbulb</span>
+                                        Improvement Suggestions
+                                    </h3>
+                                    <span
+                                        class="text-xs bg-[#282e39] text-[#9da6b9] px-2 py-1 rounded border border-[#3b4354]">3
+                                        found</span>
+                                </div>
+                                <div class="flex flex-col divide-y divide-[#282e39]">
+                                    <div class="p-4 flex gap-4 hover:bg-[#222731] transition-colors cursor-pointer">
+                                        <div class="mt-1">
+                                            <div class="size-2 rounded-full bg-red-500"></div>
+                                        </div>
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-xs font-bold text-red-400 uppercase">Grammar</span>
+                                            <p class="text-[#9da6b9] text-sm line-through decoration-red-500/50">"I have
+                                                went to the store yesterday"</p>
+                                            <p class="text-white text-sm font-medium">"I <span
+                                                    class="text-[#22c55e]">went</span> to the store yesterday"</p>
+                                            <p class="text-[#6b7280] text-xs mt-1">Use simple past tense for completed
+                                                actions in the past.</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 flex gap-4 hover:bg-[#222731] transition-colors cursor-pointer">
+                                        <div class="mt-1">
+                                            <div class="size-2 rounded-full bg-yellow-500"></div>
+                                        </div>
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-xs font-bold text-yellow-400 uppercase">Vocabulary</span>
+                                            <p class="text-[#9da6b9] text-sm">"It was a <span
+                                                    class="underline decoration-yellow-500/50">good</span> experience"
+                                            </p>
+                                            <p class="text-white text-sm font-medium">Consider: "It was a <span
+                                                    class="text-[#22c55e]">rewarding</span> experience"</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 border-t border-[#282e39] text-center">
+                                    <button class="text-[#135bec] text-sm font-bold hover:text-[#3b82f6]">View All
+                                        Suggestions</button>
+                                </div>
+                            </div>
+                            <div class="bg-[#1c1f27] rounded-xl border border-[#282e39] flex flex-col">
+                                <div class="p-4 border-b border-[#282e39] bg-[#222731]">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-[#9da6b9]">subtitles</span>
+                                        Transcript Snippet
+                                    </h3>
+                                </div>
+                                <div class="p-5 flex-1 overflow-y-auto max-h-[300px]">
+                                    <div class="flex gap-4 mb-4">
+                                        <div class="text-xs text-[#6b7280] font-mono mt-1 min-w-[40px]">00:00</div>
+                                        <p class="text-[#d1d5db] text-sm leading-relaxed">
+                                            Hello everyone, today I want to talk about my favorite hobby, which is
+                                            photography. I started photography when I was ten years old. My father gave
+                                            me an old camera, and I immediately fell in love with capturing moments.
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-4 mb-4">
+                                        <div class="text-xs text-[#6b7280] font-mono mt-1 min-w-[40px]">00:24</div>
+                                        <p class="text-[#d1d5db] text-sm leading-relaxed">
+                                            I mostly enjoy taking pictures of nature and landscapes. Last weekend, <span
+                                                class="bg-red-500/20 text-red-200 px-1 rounded">I have went</span> to
+                                            the national park near my city. It was a really <span
+                                                class="bg-yellow-500/20 text-yellow-200 px-1 rounded">good</span>
+                                            experience to see the mountains covered in snow.
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="text-xs text-[#6b7280] font-mono mt-1 min-w-[40px]">00:45</div>
+                                        <p class="text-[#d1d5db] text-sm leading-relaxed">
+                                            I hope to improve my skills and maybe one day become a professional.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="p-3 border-t border-[#282e39] text-center">
+                                    <button class="text-[#135bec] text-sm font-bold hover:text-[#3b82f6]">Full
+                                        Transcript Analysis</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="flex justify-center">
+                <div class="flex max-w-[960px] flex-1 flex-col">
+                    <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
+                        <div
+                            class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+                            <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Privacy
+                                Policy</a>
+                            <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Terms of
+                                Service</a>
+                            <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Contact
+                                Us</a>
+                        </div>
+                        <p class="text-[#9da6b9] text-base font-normal leading-normal">© 2024 LinguaSpeak. All rights
+                            reserved.</p>
+                    </footer>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

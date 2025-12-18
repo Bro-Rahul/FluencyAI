@@ -1,8 +1,9 @@
+import Image from "next/image";
 
-const StatCard = ({ label, value }: { label: string, value: string }) => {
+const StatCard = ({ label, value, icon }: { label: string, value: string, icon: any }) => {
     return (
         <div className="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39]">
-            <p className="text-xs text-[#9da6b9] uppercase">{label}</p>
+            <p className="text-xs text-[#9da6b9] uppercase inline-flex items-center gap-2"><Image src={icon} alt={label} priority />{label}</p>
             <p className="text-xl font-bold text-white">{value}</p>
         </div>
     )

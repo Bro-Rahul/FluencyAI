@@ -8,7 +8,7 @@ from faster_whisper import WhisperModel
 from pydub import AudioSegment
 from io import BytesIO
 
-routes = APIRouter(prefix='/sessions')
+routes = APIRouter()
 
 MODEL_SIZE = "small"
 DEVICE = "cpu"

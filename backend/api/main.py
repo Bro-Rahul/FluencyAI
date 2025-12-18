@@ -19,14 +19,13 @@ app.add_middleware(
 
 
 
-app.include_router(user_routes.routes)
-app.include_router(session_routes.routes)
+app.include_router(user_routes.routes,prefix="/v1/api/users")
+app.include_router(session_routes.routes,prefix="/v1/api/session")
 
 
 
 @app.exception_handler(RequestValidationError)
 async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
-    print(exc.errors())
     formatted_errors = [
         {
             "field": ".".join(str(x) for x in err["loc"]),

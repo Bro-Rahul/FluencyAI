@@ -7,7 +7,7 @@ export const fetchData = async (file: File, callBack: (streamData: string) => vo
     formData.append("audio_file", file);
 
 
-    const response = await fetch(`${baseURL}/sessions/create/`, {
+    const response = await fetch(`${baseURL}/v1/api/session/create/`, {
         method: "POST",
         body: formData,
     });

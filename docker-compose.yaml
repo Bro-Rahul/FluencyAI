@@ -13,7 +13,6 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
-
   postgresql:
     image: postgres:18-alpine
     ports:
@@ -29,7 +28,6 @@ services:
 
     volumes:
       - db-data:/var/lib/postgresql
-
 
   backend:
     build: 
@@ -47,5 +45,19 @@ services:
       postgresql:
         condition: service_healthy
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: my-rabbit 
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: kalo
+      RABBITMQ_DEFAULT_PASS: kalo
+
 volumes:
   db-data:
+  rabbitmq_data:

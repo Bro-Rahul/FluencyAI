@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from api.routes.users import user_routes
 from api.routes.sessions import session_routes
-from api.config import settings
+from api.routes.auth import auth_routes
 
 app = FastAPI()
 
@@ -17,8 +17,9 @@ app.add_middleware(
 )
 
 
-app.include_router(user_routes.routes,prefix="/v1/api/users")
-app.include_router(session_routes.routes,prefix="/v1/api/session")
+app.include_router(user_routes.routes,prefix="/v1/api/users",tags=["USERS"])
+app.include_router(session_routes.routes,prefix="/v1/api/session",tags=["SESSIONS"])
+app.include_router(auth_routes.router,prefix="/v1/api/auth",tags=["AUTH"])
 
 
 

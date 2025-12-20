@@ -1,6 +1,6 @@
 import { baseURL } from "..";
 
-export const fetchData = async (file: File, callBack: (streamData: string) => void) => {
+export const uploadAudioFile = async (file: File, callBack: (streamData: string) => void) => {
 
     const formData = new FormData();
     formData.append("user_id", "rahul")
@@ -27,3 +27,20 @@ export const fetchData = async (file: File, callBack: (streamData: string) => vo
         }
     }
 }
+
+
+// remove this api endpoint when the auth is implemented in the frontend use the above api
+export const testAudioUpload = async () => {
+
+    const response = await fetch(`${baseURL}/session/test-transcript/`, {
+        method: "POST",
+    });
+    if (!response.ok) {
+        const { detail } = await response.json()
+        throw Error(detail.error || "Something went wrong ")
+    } else {
+        return response.json();
+    }
+}
+
+

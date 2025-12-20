@@ -1,12 +1,17 @@
 from fastapi import FastAPI,Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from api.routes.users import user_routes
 from api.routes.sessions import session_routes
 from api.routes.auth import auth_routes
+from api.config import settings
+
 
 app = FastAPI()
+app.mount("/static",StaticFiles(directory=settings.MEDIA_ROOT),name="static")
+
 
 app.add_middleware(
     CORSMiddleware,

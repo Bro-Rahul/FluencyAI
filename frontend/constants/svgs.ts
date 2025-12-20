@@ -13,6 +13,10 @@ import alarmSVG from "@/public/svg/alarm.svg"
 import graphicSVG from "@/public/svg/graphic.svg"
 import subtitlesSVG from "@/public/svg/subtitles.svg"
 import glowingLightbulbSVG from "@/public/svg/glowingLightbulb.svg"
+import pauseSVG from "@/public/svg/pause.svg"
+import playSVG from "@/public/svg/play.svg"
+import warningSVG from "@/public/svg/warning.svg"
+import uploadSVG from "@/public/svg/upload.svg"
 
 
 
@@ -31,7 +35,11 @@ const svg = {
     alarmSVG,
     streakSVG,
     glowingLightbulbSVG,
-    subtitlesSVG
+    subtitlesSVG,
+    playSVG,
+    pauseSVG,
+    warningSVG,
+    uploadSVG
 }
 
 export default svg;

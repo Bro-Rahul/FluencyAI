@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     RABBIT_MQ_URL: str
     AUDIO_ROOT_DIR:Path = BASE_DIR / "media" / "audios"
     PROFILE_ROOT_DIR:Path = BASE_DIR / "media" / "profile"
+    MEDIA_ROOT:Path = BASE_DIR / "media"
     ALGORITHM:str
     SECRET_KEY:str
     ACCESS_TOKEN_EXPIRE_MINUTES:int

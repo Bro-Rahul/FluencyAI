@@ -1,14 +1,14 @@
-import TimeLine from './TimeLine';
-
+import { useState } from "react";
+import TimeLine from "./TimeLine";
 
 interface AudioPlayerProps {
     audioFile: FileList | null
-    audioTranscriptString: string,
 }
 
-const AudioPlayer = ({ audioFile, audioTranscriptString }: AudioPlayerProps) => {
+const AudioPlayer = ({ audioFile }: AudioPlayerProps) => {
 
     const url = audioFile ? URL.createObjectURL(audioFile.item(0)!) : null;
+    const [duration, setDuration] = useState<number>(0);
 
     return (
         <div className="max-w-4xl mx-auto text-center">
@@ -40,19 +40,16 @@ const AudioPlayer = ({ audioFile, audioTranscriptString }: AudioPlayerProps) => 
                     <audio
                         src={url}
                         controls
-                        className="w-full max-w-md rounded-lg border border-gray-700 bg-gray-900 audio-dark"
+                        className="w-full max-w-md rounded-lg border "
+                        onLoadedMetadata={e => setDuration(e.currentTarget.duration)}
                     />
                 )}
             </div>
-
-            <textarea
-                defaultValue={audioTranscriptString}
-                disabled
-                placeholder="Your speech will appear here..."
-                className="w-full h-32 outline-none border border-gray-700 rounded-lg p-4 mb-8 text-gray-300 resize-none"
-            >
-            </textarea>
-            <TimeLine />
+            <TimeLine
+                Hours={duration ? Math.floor(duration / 3600) : 0}
+                Minutes={duration ? Math.floor((duration % 3600) / 60) : 0}
+                Seconds={duration ? Math.floor(duration % 60) : 0}
+            />
         </div>
     )
 }

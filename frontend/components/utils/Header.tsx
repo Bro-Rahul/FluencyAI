@@ -6,10 +6,11 @@ import { Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
 import icons from "@/constants/icons";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
     const [open, setOpen] = useState(false);
-
+    const { status } = useSession();
     return (
         <header className="w-full border-b border-white/20 px-6 md:px-10 py-4  text-white">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -21,24 +22,36 @@ const Header = () => {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex gap-6 items-center">
-                    <Link href={'/report'}>
-                        <Button variant="link" className="font-semibold">
-                            Report
-                        </Button>
-                    </Link>
                     <Link href={'/practice'}>
                         <Button variant="link" className="font-semibold">
                             Practice
                         </Button>
                     </Link>
+                    <Link href={'/report'}>
+                        <Button variant="link" className="font-semibold">
+                            Reports
+                        </Button>
+                    </Link>
                     <Button variant="link" className="font-semibold">
                         Lessons
                     </Button>
-                    <Link href={'/profile'}>
-                        <Button variant="link" className="font-semibold">
-                            Profile
-                        </Button>
-                    </Link>
+
+                    {status !== "authenticated" ?
+                        <Link href={"/auth/login"}>
+                            <Button variant="link" className="font-semibold">
+                                Login
+                            </Button>
+                        </Link>
+                        :
+                        <Link href={'/profile'}>
+                            <Button variant="link" className="font-semibold">
+                                Profile
+                            </Button>
+                        </Link>
+                    }
+                    {status === "authenticated" && < Button onClick={() => signOut()} variant="secondary" className="font-semibold">
+                        SignOut
+                    </Button>}
                 </nav>
 
                 {/* Mobile Menu Button */}
@@ -51,23 +64,25 @@ const Header = () => {
             </div>
 
             {/* Mobile Dropdown Menu */}
-            {open && (
-                <div className="md:hidden mt-4 flex flex-col gap-3 pb-4 px-1">
-                    <Button variant="link" className="font-semibold text-left">
-                        Report
-                    </Button>
-                    <Button variant="link" className="font-semibold text-left">
-                        Practice
-                    </Button>
-                    <Button variant="link" className="font-semibold text-left">
-                        Lessons
-                    </Button>
-                    <Button variant="link" className="font-semibold text-left">
-                        Community
-                    </Button>
-                </div>
-            )}
-        </header>
+            {
+                open && (
+                    <div className="md:hidden mt-4 flex flex-col gap-3 pb-4 px-1">
+                        <Button variant="link" className="font-semibold text-left">
+                            Report
+                        </Button>
+                        <Button variant="link" className="font-semibold text-left">
+                            Practice
+                        </Button>
+                        <Button variant="link" className="font-semibold text-left">
+                            Lessons
+                        </Button>
+                        <Button variant="link" className="font-semibold text-left">
+                            Community
+                        </Button>
+                    </div>
+                )
+            }
+        </header >
     );
 };
 

@@ -17,6 +17,14 @@ import pauseSVG from "@/public/svg/pause.svg"
 import playSVG from "@/public/svg/play.svg"
 import warningSVG from "@/public/svg/warning.svg"
 import uploadSVG from "@/public/svg/upload.svg"
+import trendingUpSVG from "@/public/svg/trendingUp.svg"
+import arrowForwardSVG from "@/public/svg/arrowForward.svg"
+import micSVG from "@/public/svg/mic.svg"
+import addSVG from "@/public/svg/add.svg"
+import calendarTodaySVG from "@/public/svg/calendarToday.svg"
+import googleSVG from "@/public/svg/googleIcon.svg"
+import githubSVG from "@/public/svg/github.svg"
+
 
 
 
@@ -39,7 +47,14 @@ const svg = {
     playSVG,
     pauseSVG,
     warningSVG,
-    uploadSVG
+    uploadSVG,
+    trendingUpSVG,
+    arrowForwardSVG,
+    micSVG,
+    addSVG,
+    calendarTodaySVG,
+    githubSVG,
+    googleSVG
 }
 
 export default svg;

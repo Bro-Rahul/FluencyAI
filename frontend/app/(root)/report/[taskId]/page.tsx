@@ -14,8 +14,8 @@ import useSocket from '@/hooks/useSocket';
 const ReportPage = () => {
     const { taskId } = useParams<{ taskId: string }>();
     const [selectedTab, setSelectedTab] = useState<string>("finalScore");
-    const { messages } = useSocket(`/session/transcript/${taskId}/`)
-    console.log(messages)
+    // const { messages } = useSocket(`/session/transcript/${taskId}/`)
+    // console.log(messages)
     return (
         <section className="container mx-auto px-45 py-6 sm:px-0 md:px-20 min-[100px]:px-0">
             <ReportHeader />
@@ -46,7 +46,7 @@ const ReportPage = () => {
                 </TabsContent>
 
                 <TabsContent value="transcript">
-                    <Transcription messages={messages} />
+                    <Transcription messages={[]} />
                 </TabsContent>
             </Tabs>
         </section>

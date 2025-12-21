@@ -26,7 +26,7 @@ class Sessions(Base):
 
     speech_text:Mapped[str] = mapped_column(
         String,
-        nullable=False,
+        nullable=True,
     )
 
     user: Mapped["Users"] = relationship("Users", back_populates="sessions") # type: ignore

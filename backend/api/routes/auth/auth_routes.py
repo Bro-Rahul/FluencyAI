@@ -4,9 +4,9 @@ from api.views.users import user_view
 from api.views.auth import auth_view
 from api.validators.users_validator import CreateUserValidator
 from api.validators.auth_validator import LoginUserValidator
-from api.schema.auth import TokenSchema
+from api.schema.auth import TokenSchema,LoginUserSchema
 from api.exceptions.user_exceptions import UserAlreadyExistsException
-from api.db import get_db,Users
+from api.db import get_db
 
 
 
@@ -24,7 +24,7 @@ def register_user(
     return new_user
 
 
-@router.post("/login/")
+@router.post("/login/",response_model=LoginUserSchema)
 def login_user(
     login_details:LoginUserValidator,
     db:Session = Depends(get_db)
@@ -38,4 +38,12 @@ def login_user(
         )
 
     access_token = auth_view.create_access_token(data={"sub": str(user.id)})
-    return TokenSchema(access_token=access_token, token_type="bearer")
+    response = LoginUserSchema(
+        id=user.id,
+        username=user.username,
+        email=user.email,
+        score=user.score,
+        avatar=user.avatar,
+        access_token=access_token
+    )
+    return response

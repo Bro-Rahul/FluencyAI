@@ -1,12 +1,14 @@
-from fastapi import APIRouter, Depends, Form, UploadFile,status, File, WebSocket, WebSocketDisconnect,HTTPException
+from fastapi import APIRouter, Depends, Form, UploadFile, File, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
-from api.db import get_db,Sessions,get_redis
+from api.db import get_db,Sessions,get_redis,Users
 from api.config import settings
+from api.views.sessions import session_view
+from api.tasks import get_text_speech
+from api.views.auth.auth_view import get_authenticated_user
+from api.schema.sessions_schema import NewSessionResponse,SessionCreate
 from typing import Annotated
 from redis.asyncio import Redis
-from api.tasks import get_text_speech
 import secrets
-import time
 
 
 
@@ -20,19 +22,26 @@ def get_all_sessions(db: Annotated[Session, Depends(get_db)]):
 
 @routes.post("/create-transcript/")
 async def create_session(
-    user_id: Annotated[str, Form(...)],
-    audio_file: Annotated[UploadFile, File(...)]
+    audio_file: Annotated[UploadFile, File(...)],
+    user:Annotated[Users,Depends(get_authenticated_user)],
+    db:Annotated[Session,Depends(get_db)]
 ):
     audio_bytes = await audio_file.read()
     name,ext = audio_file.filename.split(".")  
     id = secrets.token_urlsafe(5)
-    audio_file_path = settings.AUDIO_ROOT_DIR / f"{name}{id}.{ext}"
+    audio_file_name = f"{name}{id}.{ext}"
+    audio_file_path = settings.AUDIO_ROOT_DIR / audio_file_name
 
-    with open(audio_file_path,"wb") as f:
-        f.write(audio_bytes)
+    # with open(audio_file_path,"wb") as f:
+        # f.write(audio_bytes)
 
-    get_text_speech.delay(id,audio_file_path._str)
-    return id
+    # get_text_speech.delay(id,audio_file_path._str)
+    new_session = session_view.create_new_session(user.id,audio_file_name,db)
+    
+    return NewSessionResponse(
+        session=SessionCreate.model_validate(new_session),
+        job_id=id
+    )
 
 
 @routes.websocket("/transcript/{stream_name}/")

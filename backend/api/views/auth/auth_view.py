@@ -27,7 +27,7 @@ def verify_user(login_info:LoginUserValidator,db:Session):
 
 
 
-def create_access_token(data: dict, expires_delta: int=15):
+def create_access_token(data: dict, expires_delta: int=settings.ACCESS_TOKEN_EXPIRE_MINUTES):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=expires_delta)
     to_encode.update({"exp": expire})

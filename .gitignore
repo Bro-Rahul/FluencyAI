@@ -3,6 +3,7 @@
 /frontend/.next
 /backend/.venv
 /backend/.env
+/backend_dummy
 /frontend/.env
 **/__pycache__/
 backend/api/__pycache__

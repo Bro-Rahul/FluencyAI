@@ -1,17 +1,10 @@
-from fastapi import FastAPI,Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.exceptions import RequestValidationError
-from api.routes.users import user_routes
-from api.routes.sessions import session_routes
-from api.routes.auth import auth_routes
+from fastapi.staticfiles import StaticFiles
+from api.routes import session_records_routes, user_routes,auth_routes
 from api.config import settings
 
-
 app = FastAPI()
-app.mount("/static",StaticFiles(directory=settings.MEDIA_ROOT),name="static")
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,25 +14,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static",StaticFiles(directory=settings.MEDIA_ROOT),name="media")
 
-app.include_router(user_routes.routes,prefix="/v1/api/users",tags=["USERS"])
-app.include_router(session_routes.routes,prefix="/v1/api/session",tags=["SESSIONS"])
-app.include_router(auth_routes.router,prefix="/v1/api/auth",tags=["AUTH"])
+PREFIX = "/v1/api"
 
-
-
-@app.exception_handler(RequestValidationError)
-async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
-    formatted_errors = [
-        {
-            "field": ".".join(str(x) for x in err["loc"]),
-            "message": err["msg"]
-        }
-        for err in exc.errors()
-    ]
-    return JSONResponse(status_code=422, content={"errors": formatted_errors})
-
+app.include_router(user_routes.router,prefix=f"{PREFIX}",tags=["Users"])
+app.include_router(auth_routes.router,prefix=f"{PREFIX}",tags=["Auth"])
+app.include_router(session_records_routes.router,prefix=f"{PREFIX}",tags=["Session Records"])
 
 @app.get("/")
-def main():
-    return "Server is Running"
+def read_root():
+    return {"message": "Hello from backend!"}
+

@@ -69,6 +69,7 @@ def get_text_speech(self:Task,audio_path: str):
         )
 
     session_record.status = TaskStatus.FINISH
+    session_record.report.transcriptions = transcription
     db.commit()
     db.close()
     return "success"

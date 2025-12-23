@@ -2,7 +2,7 @@ from fastapi import Depends,HTTPException,status
 from fastapi.routing import APIRouter
 from api.schema.user_schema import UserCreateSchema,UserResponseSchema
 from api.schema.auth_schema import LoginSchema,AuthenticatedUsersSchema
-from api.crud.auth_crud import create_access_token,validate_user
+from api.auth.auth_curd import create_access_token,validate_user
 from api.crud.user_crud import (
     create_user,
     get_user_by_email

@@ -1,5 +1,6 @@
 from pydantic import BaseModel,constr,EmailStr
-from typing import Annotated
+from typing import Annotated,List
+from api.schema.session_record_schema import SessionRecordResponseSchema
 
 
 class UserCreateSchema(BaseModel):

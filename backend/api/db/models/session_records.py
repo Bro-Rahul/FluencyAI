@@ -21,6 +21,21 @@ class SessionRecords(SQLModel, table=True):
         nullable=False
     )
 
+    title:str = Field(
+        nullable=True,
+        max_length=30,
+    )
+
+    description:str = Field(
+        nullable=True,
+        max_length=150
+    )
+
+    duration:int = Field(
+        nullable=False,
+        ge=0
+    )
+
     audio_file: str = Field(nullable=False)
 
     status: TaskStatus = Field(
@@ -34,4 +49,8 @@ class SessionRecords(SQLModel, table=True):
 
     user: "Users" = Relationship( # type: ignore
         back_populates="records"
+    )
+
+    report:"SessionReports" = Relationship( # type: ignore
+        back_populates="session"
     )

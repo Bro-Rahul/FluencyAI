@@ -5,7 +5,7 @@ import { baseURL } from "@/https"
 export const options: NextAuthOptions = {
     session: {
         strategy: "jwt",
-        maxAge: 30 * 60,
+        maxAge: 86400,
     },
 
     callbacks: {

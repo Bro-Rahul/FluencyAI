@@ -1,13 +1,11 @@
-from fastapi import APIRouter,Depends,File,UploadFile
+from fastapi import APIRouter,Depends,File,UploadFile,Form,HTTPException
 from api.db import get_db
-from api.db.models import Users
-from api.db.models import SessionRecords
-from api.tasks import get_text_speech
+from api.db.models import Users,SessionRecords
 from api.crud.session_record_crud import create_session_record
 from api.schema.session_record_schema import SessionRecordResponseSchema
 from celery.result import AsyncResult
 from sqlmodel import select,Session
-from api.crud.auth_crud import authenticated_user
+from api.auth import authenticated_user
 from api.config import settings
 from api.worker import celery_app
 from secrets import token_hex
@@ -28,7 +26,8 @@ def list_sessions(
 async def create_sessionrecord(
     user:Users = Depends(authenticated_user),
     db:Session = Depends(get_db),
-    audio_file:UploadFile = File(...,) 
+    audio_file:UploadFile = File(...,), 
+    duration:int = Form(...,ge=0)
 ):
     audio_bytes = await audio_file.read()
     name,ext = audio_file.filename.split(".")
@@ -38,16 +37,21 @@ async def create_sessionrecord(
     with open(file_path,"wb") as f:
         f.write(audio_bytes)
 
-    task = get_text_speech.delay(str(file_path))
+    try:
+        new_session = create_session_record(
+            audio_path=str(file_path),
+            duration=duration,
+            user_id=user.id,
+            db=db
+        )
 
-    new_session = create_session_record(
-        task_id=task.id,
-        user_id=user.id,
-        audio_path=str(file_path),
-        db=db
-    )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
-    return new_session
+    return new_session 
     
 
 

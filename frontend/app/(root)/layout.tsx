@@ -32,7 +32,6 @@ export default function RootLayout({
       >
         <AuthProvider>
           <div className="flex flex-col h-full w-full">
-            <Header />
             {children}
             <Toaster />
           </div>

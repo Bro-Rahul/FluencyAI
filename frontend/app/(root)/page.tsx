@@ -1,16 +1,17 @@
 import { getServerSession } from "next-auth/next"
 import { options } from "../api/auth/[...nextauth]/options";
+import Header from "@/components/utils/Header";
 
 const Page = async () => {
   const session = await getServerSession(options)
   return (
-    <div className="min-h-screen text-white px-6 py-10">
+    <div className="min-h-screen text-white px-6">
+      <Header />
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h1 className="text-3xl md:text-4xl font-bold mb-10">
           Your Personalized Recommendations
         </h1>
-        {session?.user && <p>Hi {session?.user.username}</p>}
         <section>
           <h2 className="text-xl font-semibold mb-6">New Speaking Tasks</h2>
 

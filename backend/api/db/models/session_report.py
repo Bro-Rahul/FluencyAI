@@ -17,6 +17,11 @@ class SessionReports(SQLModel,table=True):
         sa_column=Column(JSONB)
     )
 
+    report:Dict[str,Any] = Field(
+        default_factory=dict,
+        sa_column=Column(JSONB)
+    )
+
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )

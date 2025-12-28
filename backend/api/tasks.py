@@ -1,4 +1,5 @@
 from api.db import get_db
+from typing import Dict,Any
 from api.db.models.session_records import SessionRecords,TaskStatus
 from sqlmodel import Session,select
 from faster_whisper import WhisperModel
@@ -7,7 +8,9 @@ from celery.signals import worker_process_init
 from celery.app.task import Task
 from pydub import AudioSegment
 from io import BytesIO
+from api.gemini import get_prompt,client
 from .worker import celery_app
+import json
 
 
 CHUNK_SIZE = 3000
@@ -29,9 +32,9 @@ def load_model(**kwargs):
 
 
 @celery_app.task(bind=True)
-def get_text_speech(self:Task,audio_path: str):
+def generate_report(self:Task,audio_path: str):
     db:Session = next(get_db())
-    session_record = db.exec(select(SessionRecords).where(SessionRecords.task_id == self.request.id)).first()
+    session_record = db.exec(select(SessionRecords).where(SessionRecords.task_id == self.request.root_id)).first()
     if not session_record:
         return "No Such Session Record Exists "
 
@@ -62,14 +65,56 @@ def get_text_speech(self:Task,audio_path: str):
             }
         transcription.append(token)
         self.update_state(
-            state="PROGRESS",
+            state="Transcripting",
             meta={
                 "segments":transcription
             }
         )
 
-    session_record.status = TaskStatus.FINISH
     session_record.report.transcriptions = transcription
+    self.update_state(
+            state="Generating Report",
+            meta={
+                "segments":transcription
+            }
+        )
+
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=get_prompt(transcription)
+    )
+
+    response_data = json.loads(response.text)
+    session_record.status = TaskStatus.FINISH
+    session_record.report.report = response_data
+    self.update_state(
+            state="Generating Report",
+            meta={
+                "segments":transcription,
+                "report" : response_data
+            }
+        )
     db.commit()
     db.close()
     return "success"
+
+
+""" 
+@celery_app.task(bind=True)
+def generate_report(self,transcription:Dict[str,Any]):
+    db:Session = next(get_db())
+    db:Session = next(get_db())
+    session_record = db.exec(select(SessionRecords).where(SessionRecords.task_id == self.request.root_id)).first()
+    if not session_record:
+        return "No Such Session Record Exists "
+    
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=get_prompt(transcription)
+    )
+    response_data = json.loads(response.text)
+    session_record.status = TaskStatus.FINISH
+    session_record.report.report = response_data
+    db.commit()
+    db.close()
+    return response_data """

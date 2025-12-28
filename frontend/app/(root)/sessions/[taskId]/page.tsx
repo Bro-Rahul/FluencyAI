@@ -4,18 +4,18 @@ import ReportHeader from '@/components/results/ReportHeader';
 import { ResultsTabList } from '@/constants/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import FinalScore from '@/components/results/FinalScore';
 import Transcription from '@/components/results/Transcription';
 import { useParams } from 'next/navigation';
-import useSocket from '@/hooks/useSocket';
+
+
 
 const ReportPage = () => {
     const { taskId } = useParams<{ taskId: string }>();
     const [selectedTab, setSelectedTab] = useState<string>("finalScore");
-    // const { messages } = useSocket(`/session/transcript/${taskId}/`)
-    // console.log(messages)
+
     return (
         <section className="container mx-auto px-45 py-6 sm:px-0 md:px-20 min-[100px]:px-0">
             <ReportHeader />

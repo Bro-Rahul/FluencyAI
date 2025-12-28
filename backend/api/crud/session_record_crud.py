@@ -2,13 +2,16 @@ from sqlmodel import Session
 from api.db.models import SessionReports
 from api.db.models.session_records import SessionRecords,TaskStatus
 from sqlalchemy.exc import SQLAlchemyError
-from api.tasks import get_text_speech
+from api.tasks import generate_report
 from api.worker import celery_app
+
 
 def create_session_record(user_id:int,audio_path:str,duration:int,db:Session):
 
     try:
-        task = get_text_speech.delay(audio_path)
+
+        task = generate_report.delay(audio_path)
+
         new_record = SessionRecords(
             audio_file=audio_path,
             status=TaskStatus.PENDING,

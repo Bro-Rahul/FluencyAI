@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class SessionRecordResponseSchema(BaseModel):
+class SessionRecordSchema(BaseModel):
     id:int
     task_id : str
     user_id : int
@@ -10,5 +10,5 @@ class SessionRecordResponseSchema(BaseModel):
     description : str|None
     duration : int
     status : str
-    duration : int
+    score : str|None
     created_at : datetime

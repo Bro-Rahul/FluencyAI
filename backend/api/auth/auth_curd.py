@@ -7,7 +7,7 @@ from api.schema.auth_schema import LoginSchema
 from api.exceptions.users_ecceptions import InvalidCredencialsException,UserDoesNotExistsException
 from api.hasher import verify_password
 from api.config import settings
-from api.crud.user_crud import get_user_by_email
+from api.crud.users import get_user_by_email
 from datetime import datetime,timedelta,timezone
 from sqlmodel import Session,select
 from jose import jwt

@@ -1,14 +1,9 @@
-from sqlmodel import Session,select
+from sqlmodel import Session
 from api.db.models import Users
 from api.schema.user_schema import UserCreateSchema
 from api.db.models import Users
 from api.hasher import get_password_hash
-
-def get_user_by_email(email:str,db:Session)->Users|None:
-    return db.exec(select(Users).where(Users.email == email)).first()
-
-def get_user_by_id(id:str,db:Session)->Users|None:
-    return db.exec(select(Users).where(Users.id == id)).first()
+from .get import get_user_by_email
 
 def create_user(user_data:UserCreateSchema,db:Session):
     hash_password = get_password_hash(user_data.password)

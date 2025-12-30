@@ -1,15 +1,12 @@
 from fastapi import APIRouter,Depends
-from api.db.models import SessionReports
-from sqlmodel import Session,select
 from api.db import get_db
-
+from api.crud.session_report import get_reports
 
 router = APIRouter()
 
 
-@router.get("/session_reports/")
-def get_reports(
-    db:Session = Depends(get_db),
+@router.get("/session-reports/")
+def fetch_reports(
+    db = Depends(get_db),
 ):
-    result = db.exec(select(SessionReports)).all()
-    return result
+    return get_reports(db)

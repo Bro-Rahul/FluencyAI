@@ -21,16 +21,6 @@ class SessionRecords(SQLModel, table=True):
         nullable=False
     )
 
-    title:str = Field(
-        nullable=True,
-        max_length=30,
-    )
-
-    description:str = Field(
-        nullable=True,
-        max_length=150
-    )
-
     duration:int = Field(
         nullable=False,
         ge=0

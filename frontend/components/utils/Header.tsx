@@ -4,11 +4,8 @@ import icons from "@/constants/icons";
 import Link from "next/link";
 import SignIn from "./SignIn";
 import MobileView from "./MobileView";
-import { getServerSession } from "next-auth/next";
-import { options } from "@/app/api/auth/[...nextauth]/options";
 
 const Header = async () => {
-    const session = await getServerSession(options)
     return (
         <header className="w-full border-b border-white/20 px-6 md:px-10 py-4  text-white">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -34,10 +31,10 @@ const Header = async () => {
                         Lessons
                     </Button>
 
-                    <SignIn session={session} />
+                    <SignIn />
                 </nav>
             </div>
-            <MobileView session={session} />
+            <MobileView />
         </header >
     );
 };

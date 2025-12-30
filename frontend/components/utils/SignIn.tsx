@@ -3,13 +3,14 @@ import { Button } from '../ui/button'
 import svg from '@/constants/svgs'
 import Image from 'next/image'
 import Link from 'next/link'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 
-const SignIn = ({ session }: { session: Session | null }) => {
+const SignIn = () => {
+    const { data } = useSession();
     return (
         <>
-            {!session?.user ?
+            {!data?.user ?
                 <Link href={"/auth/login"}>
                     <Button variant="link" className="font-semibold">
                         Login
@@ -23,9 +24,9 @@ const SignIn = ({ session }: { session: Session | null }) => {
                 </Link>
             }
             <div className="p-2 bg-accent rounded-full">
-                <Image src={session?.user.avatar ? session.user.avatar : svg.profileSVG} alt="profile icons" priority />
+                <Image src={data?.user.avatar ? data.user.avatar : svg.profileSVG} alt="profile icons" priority />
             </div>
-            {session?.user && < Button onClick={() => signOut()} variant="secondary" className="font-semibold">
+            {data?.user && < Button onClick={() => signOut()} variant="secondary" className="font-semibold">
                 SignOut
             </Button>}
         </>

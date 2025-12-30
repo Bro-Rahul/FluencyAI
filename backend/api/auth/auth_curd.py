@@ -61,3 +61,25 @@ def authenticated_user(
     if user is None:
         raise credentials_exception
     return user
+
+
+def authenticated_user_token(
+    token:str,
+    db:Session
+):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+    except JWTError as e:
+        raise credentials_exception
+    user = get_user_by_email(user_id,db)
+    if user is None:
+        raise credentials_exception
+    return user

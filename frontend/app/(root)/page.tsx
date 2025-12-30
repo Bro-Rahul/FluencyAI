@@ -6,7 +6,6 @@ const Page = async () => {
   const session = await getServerSession(options)
   return (
     <div className="min-h-screen text-white px-6">
-      <Header />
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h1 className="text-3xl md:text-4xl font-bold mb-10">

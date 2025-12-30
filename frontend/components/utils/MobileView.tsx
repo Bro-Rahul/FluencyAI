@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Button } from '../ui/button';
 import { Session } from 'next-auth';
 
-const MobileView = ({ session }: { session: Session | null }) => {
+const MobileView = () => {
     const [open, setOpen] = useState(false);
 
     return (

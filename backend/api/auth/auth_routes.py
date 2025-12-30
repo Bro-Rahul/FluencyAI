@@ -1,5 +1,6 @@
 from fastapi import Depends,HTTPException,status
 from fastapi.routing import APIRouter
+from fastapi.responses import JSONResponse
 from api.schema.user_schema import UserCreateSchema,UserResponseSchema
 from api.schema.auth_schema import LoginSchema,AuthenticatedUsersSchema
 from api.auth.auth_curd import create_access_token,validate_user
@@ -13,7 +14,7 @@ from sqlmodel import Session
 router = APIRouter()
 
 
-@router.post("/auth/login/",response_model=AuthenticatedUsersSchema)
+@router.post("/auth/login/",response_model=AuthenticatedUsersSchema,response_class=JSONResponse)
 def login_user(
     user_details : LoginSchema,
     db:Session = Depends(get_db)
@@ -26,9 +27,10 @@ def login_user(
             detail=str(e)
         )
     access_token = create_access_token(data={"sub": str(user.email)})
+
     return {
-        **user.model_dump(),   
-        "access_token" : access_token
+        **user.model_dump(),
+        "access_token": access_token,
     }
 
 @router.post("/auth/register/",response_model=UserResponseSchema)

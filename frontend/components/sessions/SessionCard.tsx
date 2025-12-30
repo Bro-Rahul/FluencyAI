@@ -2,6 +2,7 @@ import svg from '@/constants/svgs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { formateDateTime, formatDuration } from '@/utils/helper'
+import { SessionRecordsType } from '@/types/session'
 
 interface SessionCardProps {
     session: SessionRecordsType
@@ -48,7 +49,7 @@ const SessionCard = ({ session }: SessionCardProps) => {
                         <span
                             className="text-xs font-bold text-[#9da6b9] uppercase tracking-wider mb-0.5">Score</span>
                         <div className="flex items-center gap-2">
-                            <span className="text-3xl font-black text-white">85</span>
+                            <span className="text-3xl font-black text-white">{session.score ?? 1}</span>
                             <span
                                 className="text-xs font-bold text-[#135bec] bg-[#135bec]/10 px-2 py-1 rounded">Excellent</span>
                         </div>

@@ -31,6 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#111318] dark`}
       >
         <AuthProvider>
+          <Header />
           <div className="flex flex-col h-full w-full">
             {children}
             <Toaster />

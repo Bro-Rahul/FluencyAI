@@ -12,3 +12,7 @@ class SessionRecordSchema(BaseModel):
     status : str
     score : str|None
     created_at : datetime
+
+class SessionStatisticsSchema(BaseModel):
+    avg: str
+    total : str

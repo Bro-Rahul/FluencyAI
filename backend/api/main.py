@@ -13,9 +13,13 @@ import uvicorn
 app = FastAPI(title="Fluency AI")
 app.mount("/static",StaticFiles(directory=settings.MEDIA_ROOT),name="media")
 
+origins = [
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,      
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

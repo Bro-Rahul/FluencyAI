@@ -53,11 +53,10 @@ async def create_session(
 
 
 @router.get("/get-statistics/",response_model=SessionStatisticsSchema)
-async def get_stats(
+def get_stats(
     user = Depends(authenticated_user),
     db = Depends(get_db)
 ):
     result = get_user_statistics(db,user.id)
-    print(result)
     return result
 

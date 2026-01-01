@@ -52,12 +52,11 @@ export class FilterStrategy {
                 break;
             case 'highest_score':
                 this.filter = new FilterByHighestScoreSession()
+                break;
         }
     }
 
     applyFilter() {
-        console.log("inside the apply")
-        console.log(this.sessionRecords)
         return this.filter.filterSessions(this.sessionRecords)
     }
 }

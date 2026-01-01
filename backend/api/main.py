@@ -10,8 +10,11 @@ from api.routes import (
 from api.config import settings
 import uvicorn
 
+
+PREFIX = "/v1/api"
+
 app = FastAPI(title="Fluency AI")
-app.mount("/static",StaticFiles(directory=settings.MEDIA_ROOT),name="media")
+app.mount(f"{PREFIX}/static",StaticFiles(directory=settings.MEDIA_ROOT),name="media")
 
 origins = [
     "http://localhost:3000",
@@ -26,7 +29,6 @@ app.add_middleware(
 )
 
 
-PREFIX = "/v1/api"
 
 app.include_router(user_routes.router,prefix=f"{PREFIX}",tags=["Users"])
 app.include_router(auth_routes.router,prefix=f"{PREFIX}",tags=["Auth"])

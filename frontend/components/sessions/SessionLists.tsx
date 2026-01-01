@@ -1,4 +1,3 @@
-import React from 'react'
 import SessionCard from './SessionCard'
 import { SessionRecordsType } from '@/types/session'
 import { Skeleton } from '../ui/skeleton'

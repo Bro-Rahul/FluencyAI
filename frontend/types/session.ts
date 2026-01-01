@@ -1,3 +1,6 @@
+export type FilterType = "Oldest" | "Newest" | "lowest_score" | "highest_score"
+
+
 export interface SessionRecordsType {
     id: number,
     task_id: string,
@@ -10,4 +13,9 @@ export interface SessionRecordsType {
     created_at: string
 }
 
-export type FilterType = "Oldest" | "Newest" | "lowest_score" | "highest_score"
+
+export interface UserStatisticsType {
+    total: number,
+    avg: number,
+    streak: number
+}

@@ -5,9 +5,9 @@ import SessionLists from "./SessionLists"
 import SessionPagination from "./SessionPagination"
 import useSessionFilter from "@/hooks/useSessionFilter"
 import { useState } from "react"
+import { FilterType } from "@/types/session"
 
 
-type FilterType = "Oldest" | "Newest" | "lowest_score" | "highest_score"
 
 interface SessionHistoriesProps {
     accessToken: string

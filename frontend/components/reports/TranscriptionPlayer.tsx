@@ -1,18 +1,39 @@
+"use client"
 import Image from "next/image"
 import svg from "@/constants/svgs"
+import { baseAssetsURL } from "@/https"
+import { useRef, useState } from "react"
+import { formatDuration } from "@/utils/helper"
 
-const TranscriptionPlayer = () => {
+interface TranscriptionPlayerProps {
+    audioFileName: string,
+    duration: number
+}
+const TranscriptionPlayer = ({ audioFileName, duration }: TranscriptionPlayerProps) => {
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const handlePlayAndPause = () => {
+        if (!audioRef.current) return;
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play()
+        }
+        setIsPlaying(pre => !pre);
+    }
     return (
         <div
             className="flex flex-wrap items-center justify-between gap-4 bg-[#1c1f27] p-4 rounded-xl border border-[#282e39]">
             <div className="flex items-center gap-4">
+                <audio src={`${baseAssetsURL}/audios/${audioFileName}`} ref={audioRef} />
                 <button
+                    onClick={handlePlayAndPause}
                     className="flex items-center justify-center size-10 rounded-full bg-[#135bec] text-white hover:bg-[#1d64f2] transition-colors shadow-md">
-                    <Image src={svg.playSVG} alt='play btn' />
+                    <Image src={isPlaying ? svg.pauseSVG : svg.playSVG} alt='Audio controller btn' />
                 </button>
                 <div className="flex flex-col">
                     <span className="text-white font-bold text-sm">Play Recording</span>
-                    <span className="text-[#9da6b9] text-xs">02:14 Total Duration</span>
+                    <span className="text-[#9da6b9] text-xs">{formatDuration(duration)}s Total Duration</span>
                 </div>
             </div>
             <div className="flex items-center gap-6">

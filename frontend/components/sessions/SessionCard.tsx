@@ -12,7 +12,7 @@ interface SessionCardProps {
 const SessionCard = ({ session }: SessionCardProps) => {
     const { formattedDate, formattedTime } = formateDateTime(session.created_at);
     return (
-        <Link className="group block relative" href={`/sessions/${session.task_id}`}>
+        <Link className="group block relative" href={`/sessions/${session.id}`}>
             <div
                 className="bg-[#1c1f27] hover:bg-[#222731] rounded-xl p-5 border border-[#282e39] group-hover:border-[#3b82f6] transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
                 <div className="flex items-start gap-4 flex-1">

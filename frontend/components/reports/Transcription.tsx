@@ -2,18 +2,24 @@ import Image from 'next/image'
 import svg from '@/constants/svgs'
 import TranscriptionPlayer from './TranscriptionPlayer'
 import PlainTranscriptionText from './PlainTranscriptionText'
+import { TranscriptionSchema } from '@/types/sessionReport'
 
 interface TranscriptionProps {
-    messages: any[]
+    transcriptions: TranscriptionSchema[]
+    audioFileName: string
+    duration: number
 }
 
-const Transcription = ({ messages }: TranscriptionProps) => {
+const Transcription = ({ transcriptions, audioFileName, duration }: TranscriptionProps) => {
     return (
         <div className="flex flex-col gap-6 px-4 pb-8">
-            <TranscriptionPlayer />
+            <TranscriptionPlayer
+                audioFileName={audioFileName}
+                duration={duration}
+            />
             <div className="bg-[#1c1f27] rounded-xl border border-[#282e39] flex flex-col">
-                <div className="p-6 md:p-8 flex flex-col gap-8 h-137.5 overflow-y-scroll">
-                    {messages.length !== 0 && <PlainTranscriptionText messages={messages} />}
+                <div className="p-6 md:p-8 flex flex-col gap-8 h-137.5 overflow-y-scroll scrollbar">
+                    <PlainTranscriptionText transcriptions={transcriptions} />
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

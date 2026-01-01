@@ -1,19 +1,25 @@
+import { SessionReport } from '@/types/sessionReport'
 import SpeechScoreMatrix from './SpeechScoreMatrix'
 import StatCard from './StatCard'
 import svg from '@/constants/svgs'
 import Image from 'next/image'
-import { Skeleton } from '../ui/skeleton'
 
-const FinalScore = () => {
-    const isLoading = false;
+interface FinalScoreProps {
+    report: SessionReport
+}
+
+const FinalScore = ({ report }: FinalScoreProps) => {
     return (
         <div className='flex flex-col gap-5'>
-            <SpeechScoreMatrix />
+            <SpeechScoreMatrix
+                score={report.score * 10}
+                description={report.description}
+            />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                {isLoading ? <Skeleton className='bg-[#1c1f27] h-28 w-full' /> : <StatCard label="Duration" value="02:14" icon={svg.alarmSVG} />}
-                {isLoading ? <Skeleton className='bg-[#1c1f27] h-28 w-full' /> : <StatCard label="Avg Pace" value="120 wpm" icon={svg.pacingSVG} />}
-                {isLoading ? <Skeleton className='bg-[#1c1f27] h-28 w-full' /> : <StatCard label="Fillers" value="3 detected" icon={svg.graphicSVG} />}
-                {isLoading ? <Skeleton className='bg-[#1c1f27] h-28 w-full' /> : <StatCard label="Streak" value="5 Days" icon={svg.streakSVG} />}
+                <StatCard label="Duration" value="02:14" icon={svg.alarmSVG} />
+                <StatCard label="Avg Pace" value="120 wpm" icon={svg.pacingSVG} />
+                <StatCard label="Fillers" value="3 detected" icon={svg.graphicSVG} />
+                <StatCard label="Streak" value="5 Days" icon={svg.streakSVG} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">

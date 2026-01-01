@@ -125,4 +125,21 @@
   .banner {
     background-image: url("../../public/image/banner.png");
   }
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #222731 transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #222731;
+    border-radius: 9999px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }

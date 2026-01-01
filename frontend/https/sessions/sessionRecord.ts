@@ -1,15 +1,17 @@
+import { UserStatisticsType } from "@/types/session";
 import { baseURL } from "..";
 
-export const getSessionRecords = async (token: string): Promise<SessionRecordsType[]> => {
-    const response = await fetch(`${baseURL}/sessions/`, {
+const baseSessionURL = `${baseURL}/sessions`
+
+export const getUserStatistics = async (token: string): Promise<UserStatisticsType> => {
+    const response = await fetch(`${baseSessionURL}/get-statistics/`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
         }
-    })
+    });
     if (!response.ok) {
         const err = await response.json()
-        throw Error(err.detail || " Can't fetch the Session Records!")
+        throw new Error(err.detail || " Can't get user Stats")
     }
-
     return response.json()
 }

@@ -1,10 +1,18 @@
-const ReportHeader = () => {
+import { formateDateTime } from "@/utils/helper"
+
+interface ReportHeaderProps {
+    sessionId: number
+    datetimeString: string
+}
+
+const ReportHeader = ({ datetimeString, sessionId }: ReportHeaderProps) => {
+    const { formattedDate, formattedTime } = formateDateTime(datetimeString)
     return (
         <div className="flex flex-wrap justify-between items-end gap-3 p-4">
             <div className="flex flex-col gap-1">
                 <p className="text-white text-[32px] font-bold">Session Report</p>
                 <p className="text-[#9da6b9] text-sm font-medium">
-                    October 26, 2023 • 10:45 AM • Practice Session #42
+                    {formattedDate} {formattedTime} • Practice Session #{sessionId}
                 </p>
             </div>
 

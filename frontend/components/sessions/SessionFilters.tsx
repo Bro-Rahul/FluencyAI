@@ -5,9 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
-
-type FilterType = "Oldest" | "Newest" | "lowest_score" | "highest_score"
+import { FilterType } from "@/types/session"
 
 
 interface SessionFiltersProps {

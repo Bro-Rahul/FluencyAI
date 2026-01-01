@@ -35,7 +35,6 @@ export const options: NextAuthOptions = {
             async authorize(credentials) {
                 const res = await fetch(`${baseURL}/auth/login/`, {
                     method: "POST",
-                    credentials: "include",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(credentials),
                 })

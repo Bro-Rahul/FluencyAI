@@ -7,7 +7,6 @@ import { options } from "@/app/api/auth/[...nextauth]/options"
 
 const SessionsPage = async () => {
     const session = await getServerSession(options)
-
     return (
         <div className="px-40 flex flex-1 justify-center py-5">
             <div className="layout-content-container flex flex-col max-w-240 flex-1">
@@ -24,8 +23,12 @@ const SessionsPage = async () => {
                         <Image priority src={svg.addSVG} alt="add session icon" />
                     </button>
                 </div>
-                <SessionStats />
-                <SessionHistories accessToken={session?.user.access_token!} />
+                <SessionStats
+                    accessToken={session?.user.access_token!}
+                />
+                <SessionHistories
+                    accessToken={session?.user.access_token!}
+                />
             </div>
         </div>
     )

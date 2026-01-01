@@ -1,12 +1,12 @@
-import React from 'react'
+import { TranscriptionSchema } from "@/types/sessionReport"
 
 interface PlainTranscriptionTextProps {
-    messages: any[]
+    transcriptions: TranscriptionSchema[]
 }
 
-const PlainTranscriptionText = ({ messages }: PlainTranscriptionTextProps) => {
+const PlainTranscriptionText = ({ transcriptions }: PlainTranscriptionTextProps) => {
     return (
-        messages.map((item, idx) => (
+        transcriptions.map((item, idx) => (
             <div key={idx}
                 className="flex gap-4 md:gap-6 group hover:bg-[#222731] p-3 rounded-lg transition-colors -mx-3">
                 <div className="flex flex-col items-end gap-1 min-w-15">

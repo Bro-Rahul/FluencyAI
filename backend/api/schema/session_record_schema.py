@@ -14,5 +14,6 @@ class SessionRecordSchema(BaseModel):
     created_at : datetime
 
 class SessionStatisticsSchema(BaseModel):
-    avg: str
-    total : str
+    total: int
+    avg : float
+    streak : int

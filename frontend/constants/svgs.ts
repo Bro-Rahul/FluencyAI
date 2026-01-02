@@ -25,6 +25,9 @@ import calendarTodaySVG from "@/public/svg/calendarToday.svg"
 import googleSVG from "@/public/svg/googleIcon.svg"
 import githubSVG from "@/public/svg/github.svg"
 import profileSVG from "@/public/svg/profile.svg"
+import closeSVG from "@/public/svg/close.svg"
+import squareSVG from "@/public/svg/square.svg"
+
 
 
 
@@ -56,7 +59,9 @@ const svg = {
     calendarTodaySVG,
     githubSVG,
     googleSVG,
-    profileSVG
+    profileSVG,
+    closeSVG,
+    squareSVG
 }
 
 export default svg;

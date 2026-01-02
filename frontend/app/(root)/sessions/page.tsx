@@ -4,6 +4,8 @@ import svg from "@/constants/svgs"
 import Image from "next/image"
 import { getServerSession } from "next-auth"
 import { options } from "@/app/api/auth/[...nextauth]/options"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const SessionsPage = async () => {
     const session = await getServerSession(options)
@@ -17,11 +19,13 @@ const SessionsPage = async () => {
                         <p className="text-[#9da6b9] text-sm font-medium">Review your past sessions and track your
                             improvement over time.</p>
                     </div>
-                    <button
-                        className="flex items-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">
-                        <span>New Session</span>
-                        <Image priority src={svg.addSVG} alt="add session icon" />
-                    </button>
+                    <Link href={'/practice'}>
+                        <Button
+                            className="flex items-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">
+                            <span>New Session</span>
+                            <Image priority src={svg.addSVG} alt="add session icon" />
+                        </Button>
+                    </Link>
                 </div>
                 <SessionStats
                     accessToken={session?.user.access_token!}

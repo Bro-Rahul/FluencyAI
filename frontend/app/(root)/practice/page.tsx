@@ -15,6 +15,7 @@ const PracticePage = () => {
                 audioFile={audioFile}
                 handleFileUpload={handleFile}
             />
+
         </div>
     );
 };

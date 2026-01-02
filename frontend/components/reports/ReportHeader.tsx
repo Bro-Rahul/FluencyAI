@@ -1,4 +1,6 @@
 import { formateDateTime } from "@/utils/helper"
+import { Button } from "../ui/button"
+import Link from "next/link"
 
 interface ReportHeaderProps {
     sessionId: number
@@ -16,9 +18,11 @@ const ReportHeader = ({ datetimeString, sessionId }: ReportHeaderProps) => {
                 </p>
             </div>
 
-            <button className="flex items-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2 rounded-lg text-sm font-bold">
-                New Session →
-            </button>
+            <Link href={'/practice'}>
+                <Button className="flex items-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2 rounded-lg text-sm font-bold">
+                    New Session →
+                </Button>
+            </Link>
         </div>
     )
 }

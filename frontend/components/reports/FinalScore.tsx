@@ -1,24 +1,28 @@
-import { SessionReport } from '@/types/sessionReport'
+import { SessionReport, TranscriptionSchema } from '@/types/sessionReport'
 import SpeechScoreMatrix from './SpeechScoreMatrix'
 import StatCard from './StatCard'
 import svg from '@/constants/svgs'
 import Image from 'next/image'
+import { formatDuration } from '@/utils/helper'
 
 interface FinalScoreProps {
-    report: SessionReport
+    report: SessionReport,
+    transcriptions: TranscriptionSchema[]
+    duration: number
 }
 
-const FinalScore = ({ report }: FinalScoreProps) => {
+const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
     return (
         <div className='flex flex-col gap-5'>
             <SpeechScoreMatrix
                 score={report.score * 10}
                 description={report.description}
+                performanceMetrix={report.key_metrics}
             />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                <StatCard label="Duration" value="02:14" icon={svg.alarmSVG} />
-                <StatCard label="Avg Pace" value="120 wpm" icon={svg.pacingSVG} />
-                <StatCard label="Fillers" value="3 detected" icon={svg.graphicSVG} />
+                <StatCard label="Duration" value={`${formatDuration(duration)}s`} icon={svg.alarmSVG} />
+                <StatCard label="Avg Pace" value={`${report.avg_pace}`} icon={svg.pacingSVG} />
+                <StatCard label="Fillers" value={`${report.filler.total_count}`} icon={svg.graphicSVG} />
                 <StatCard label="Streak" value="5 Days" icon={svg.streakSVG} />
             </div>
 
@@ -75,31 +79,15 @@ const FinalScore = ({ report }: FinalScoreProps) => {
                             Transcript Snippet
                         </h3>
                     </div>
-                    <div className="p-5 flex-1 overflow-y-auto max-h-75">
-                        <div className="flex gap-4 mb-4">
-                            <div className="text-xs text-[#6b7280] font-mono mt-1 min-w-10">00:00</div>
-                            <p className="text-[#d1d5db] text-sm leading-relaxed">
-                                Hello everyone, today I want to talk about my favorite hobby, which is
-                                photography. I started photography when I was ten years old. My father gave
-                                me an old camera, and I immediately fell in love with capturing moments.
-                            </p>
-                        </div>
-                        <div className="flex gap-4 mb-4">
-                            <div className="text-xs text-[#6b7280] font-mono mt-1 min-w-10">00:24</div>
-                            <p className="text-[#d1d5db] text-sm leading-relaxed">
-                                I mostly enjoy taking pictures of nature and landscapes. Last weekend, <span
-                                    className="bg-red-500/20 text-red-200 px-1 rounded">I have went</span> to
-                                the national park near my city. It was a really <span
-                                    className="bg-yellow-500/20 text-yellow-200 px-1 rounded">good</span>
-                                experience to see the mountains covered in snow.
-                            </p>
-                        </div>
-                        <div className="flex gap-4">
-                            <div className="text-xs text-[#6b7280] font-mono mt-1 min-w-10">00:45</div>
-                            <p className="text-[#d1d5db] text-sm leading-relaxed">
-                                I hope to improve my skills and maybe one day become a professional.
-                            </p>
-                        </div>
+                    <div className="p-5 flex-1 overflow-y-auto max-h-75 scrollbar">
+                        {transcriptions.map((item, idx) =>
+                            <div className="flex gap-4 mb-4" key={idx}>
+                                <div className="text-xs text-[#6b7280] font-mono mt-1 min-w-10">{item.start}:{item.end}</div>
+                                <p className="text-[#d1d5db] text-sm leading-relaxed">
+                                    {item.text}
+                                </p>
+                            </div>
+                        )}
                     </div>
                     <div className="p-3 border-t border-[#282e39] text-center">
                         <button className="text-[#135bec] text-sm font-bold hover:text-[#3b82f6]">Full

@@ -1,10 +1,8 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import svg from '@/constants/svgs'
 import { Button } from '../ui/button'
-import { testAudioUpload } from '@/https/sessions/sessionHttp'
-import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
+import RecordingDialog from './RecordingDialog'
 
 interface UploadAudiosProps {
     handleFileUpload: (files: FileList | null) => void
@@ -13,38 +11,42 @@ interface UploadAudiosProps {
 
 const UploadAudios = ({ audioFile, handleFileUpload }: UploadAudiosProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const router = useRouter();
+    const [hasRecordPermission, setRecordPermission] = useState<"granted" | "denied" | "prompt">("denied");
+    useEffect(() => {
+        const checkPermission = async () => {
+            if (!navigator.permissions) return;
+            try {
+                const status = await navigator.permissions.query({ name: "microphone" });
+                setRecordPermission(status.state);
+                status.onchange = () => {
+                    setRecordPermission(status.state);
+                };
+            } catch (err) {
+                setRecordPermission("denied")
+            }
+        };
+
+        checkPermission();
+    }, []);
+
     const handleClick = () => {
         if (!inputRef.current) return;
         inputRef.current.click();
     }
-
     const handleUpload = async () => {
-        const request = testAudioUpload()
-        toast.promise(request, {
-            loading: 'Loading',
-            success: (data) => `Successfully saved ${data}`,
-            error: (err) => `This just happened: ${err.toString()}`,
-        }, {
-            position: "bottom-right",
-            duration: 2000
-        })
-        try {
-            const response = await request;
-            router.push(`/report/${response}`)
-        } catch (err: any) {
-            console.log(err);
-        }
+        const state = await navigator.mediaDevices.getUserMedia({ audio: true })
     }
 
     return (
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <span onClick={handleUpload}>dsd</span>
             <input type='file' className='hidden' ref={inputRef} onChange={e => handleFileUpload(e.target.files)} />
-            <Button className="bg-blue-600 hover:bg-blue-500 text-white py-2 px-6 rounded-md">
-                Record
-            </Button>
+            <RecordingDialog
+                onClick={handleUpload}
+                hasRecordingPermission={hasRecordPermission !== "denied"}
+            />
             <Button onClick={handleClick} className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-6 rounded-md cursor-pointer">
-                Upload File
+                Upload File {hasRecordPermission}
             </Button>
             {audioFile &&
                 <Button

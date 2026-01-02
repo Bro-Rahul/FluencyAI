@@ -6,7 +6,19 @@ const useAudioPlayer = () => {
 
     const handleFile = (fileList: FileList | null) => {
         if (!fileList) return;
-        setAudioFile(fileList);
+        const filename = fileList.item(0)?.name;
+        if (!filename) return;
+        const ext = filename.split(".")[1];
+        if (validateFile(ext)) {
+            setAudioFile(fileList);
+            return
+        }
+        throw Error("File Should be an Audio File")
+    }
+
+    const validateFile = (fileExt: string) => {
+        const audioFileFormates = ["mp3", "wav", "aac", "flac", "ogg"]
+        return audioFileFormates.includes(fileExt.toLowerCase());
     }
 
     return {
@@ -16,3 +28,4 @@ const useAudioPlayer = () => {
 }
 
 export default useAudioPlayer
+

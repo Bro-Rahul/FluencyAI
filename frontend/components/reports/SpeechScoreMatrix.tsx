@@ -1,13 +1,15 @@
-import { metrics } from "@/constants/data"
-import Image from "next/image"
 import ScoreBoard from "./ScoreBoard";
+import PerformanceMetrix from "./PerformanceMetrix";
+import svg from "@/constants/svgs";
+import { KeyMetric } from "@/types/sessionReport";
 
 interface SpeechScoreMatrixProps {
     score: number,
-    description: string
+    description: string,
+    performanceMetrix: KeyMetric
 }
 
-const SpeechScoreMatrix = ({ score, description }: SpeechScoreMatrixProps) => {
+const SpeechScoreMatrix = ({ score, description, performanceMetrix }: SpeechScoreMatrixProps) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
             <div className="bg-[#1c1f27] rounded-xl p-6 border-t-2 border-2 border-t-[#135bec] border-[#282e39] flex flex-col items-center gap-6 relative">
@@ -20,28 +22,30 @@ const SpeechScoreMatrix = ({ score, description }: SpeechScoreMatrixProps) => {
             <div className="md:col-span-2">
                 <div className="bg-[#1c1f27] rounded-xl p-6 border border-[#282e39]">
                     <h3 className="text-white font-bold mb-4">Performance Breakdown</h3>
-                    {metrics.map(metric => (
-                        <div key={metric.label} className="mb-4">
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-white inline-flex gap-x-2 items-center">
-                                    <Image
-                                        src={metric.icons}
-                                        alt="this is svg"
-                                        width={20}
-                                        height={20}
-                                        priority
-                                    />
-                                    {metric.label}</span>
-                                <span className="text-white">{metric.value}%</span>
-                            </div>
-                            <div className="h-2 bg-[#282e39] rounded-full">
-                                <div
-                                    className={`h-full ${metric.color} rounded-full`}
-                                    style={{ width: `${metric.value}%` }}
-                                />
-                            </div>
-                        </div>
-                    ))}
+                    <PerformanceMetrix
+                        label="Grammar Accuracy"
+                        value={performanceMetrix.grammar_accuracy}
+                        color="bg-green-500"
+                        icon={svg.grammerSVG}
+                    />
+                    <PerformanceMetrix
+                        label="Fluency"
+                        value={performanceMetrix.fluency}
+                        color="bg-yellow-500"
+                        icon={svg.fluencySVG}
+                    />
+                    <PerformanceMetrix
+                        label="Pacing"
+                        value={performanceMetrix.pacing}
+                        color="bg-purple-500"
+                        icon={svg.pacingSVG}
+                    />
+                    <PerformanceMetrix
+                        label="Confidence"
+                        value={performanceMetrix.confidence}
+                        color="bg-pink-500"
+                        icon={svg.confidenceSVG}
+                    />
                 </div>
             </div>
         </div>

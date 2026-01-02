@@ -2,14 +2,16 @@ import { useState } from "react";
 import TimeLine from "./TimeLine";
 
 interface AudioPlayerProps {
-    audioFile: FileList | null
+    audioURL: string | null,
+    fileName: string | null,
+    duration: number,
+    handleDuration: (duration: number) => void
 }
 
-const AudioPlayer = ({ audioFile }: AudioPlayerProps) => {
-
-    const url = audioFile ? URL.createObjectURL(audioFile.item(0)!) : null;
-    const [duration, setDuration] = useState<number>(0);
-
+const AudioPlayer = ({ audioURL, fileName, duration, handleDuration }: AudioPlayerProps) => {
+    const loadDuration = (time: number) => {
+        handleDuration(time)
+    }
     return (
         <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Practice Session</h1>
@@ -33,15 +35,15 @@ const AudioPlayer = ({ audioFile }: AudioPlayerProps) => {
             </div>
 
             <h2 className="text-xl font-semibold">Practice Session</h2>
-            <p className="text-gray-400 mb-8">LinguaSpeak</p>
+            {fileName && <p className="text-gray-400 mb-8">{fileName}</p>}
 
             <div className="flex items-center justify-center gap-6 mb-10">
-                {url && (
+                {audioURL && (
                     <audio
-                        src={url}
+                        src={audioURL}
                         controls
                         className="w-full max-w-md rounded-lg border "
-                        onLoadedMetadata={e => setDuration(e.currentTarget.duration)}
+                        onLoadedMetadata={e => loadDuration(e.currentTarget.duration)}
                     />
                 )}
             </div>

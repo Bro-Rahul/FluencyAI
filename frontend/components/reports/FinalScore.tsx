@@ -3,7 +3,7 @@ import SpeechScoreMatrix from './SpeechScoreMatrix'
 import StatCard from './StatCard'
 import svg from '@/constants/svgs'
 import Image from 'next/image'
-import { formatDuration } from '@/utils/helper'
+import { formateDuration } from '@/utils/helper'
 
 interface FinalScoreProps {
     report: SessionReport,
@@ -20,7 +20,7 @@ const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
                 performanceMetrix={report.key_metrics}
             />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                <StatCard label="Duration" value={`${formatDuration(duration)}s`} icon={svg.alarmSVG} />
+                <StatCard label="Duration" value={`${formateDuration(duration)}s`} icon={svg.alarmSVG} />
                 <StatCard label="Avg Pace" value={`${report.avg_pace}`} icon={svg.pacingSVG} />
                 <StatCard label="Fillers" value={`${report.filler.total_count}`} icon={svg.graphicSVG} />
                 <StatCard label="Streak" value="5 Days" icon={svg.streakSVG} />

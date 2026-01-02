@@ -1,7 +1,7 @@
 import svg from '@/constants/svgs'
 import Image from 'next/image'
 import Link from 'next/link'
-import { formateDateTime, formatDuration } from '@/utils/helper'
+import { formateDateTime, formateDuration } from '@/utils/helper'
 import { SessionRecordsType } from '@/types/session'
 
 interface SessionCardProps {
@@ -39,7 +39,7 @@ const SessionCard = ({ session }: SessionCardProps) => {
                             <span className="flex items-center gap-1">
                                 <Image src={svg.alarmSVG} alt='time' width={15} height={15} />{formattedTime}</span>
                             <span className="w-1 h-1 rounded-full bg-[#6b7280]"></span>
-                            <span>{formatDuration(session.duration)}s</span>
+                            <span>{formateDuration(session.duration)}s</span>
                         </div>
                     </div>
                 </div>

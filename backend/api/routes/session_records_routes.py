@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends,File,UploadFile,Form
+from fastapi import APIRouter,Depends,File,UploadFile,Form,HTTPException,status
 from fastapi.responses import StreamingResponse
 from fastapi.requests import Request
 from api.crud.session_record import (
@@ -44,10 +44,16 @@ async def list_sessions_sse(
 async def create_session(
     user = Depends(authenticated_user),
     audio_file:UploadFile = File(...),
-    duration:int = Form(...,ge=0),
+    duration:float = Form(...,ge=0),
     db = Depends(get_db)
 ):
-    new_session = await create_new_session(user.id,audio_file,duration,db)
+    try:
+        num = int(duration)
+    except Exception as e:
+        raise HTTPException(
+            detail="Error"
+        )
+    new_session = await create_new_session(user.id,audio_file,int(duration),db)
     return new_session
 
 

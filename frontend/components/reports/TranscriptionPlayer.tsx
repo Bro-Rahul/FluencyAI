@@ -3,7 +3,7 @@ import Image from "next/image"
 import svg from "@/constants/svgs"
 import { baseAssetsURL } from "@/https"
 import { useRef, useState } from "react"
-import { formatDuration } from "@/utils/helper"
+import { formateDuration } from "@/utils/helper"
 
 interface TranscriptionPlayerProps {
     audioFileName: string,
@@ -33,7 +33,7 @@ const TranscriptionPlayer = ({ audioFileName, duration }: TranscriptionPlayerPro
                 </button>
                 <div className="flex flex-col">
                     <span className="text-white font-bold text-sm">Play Recording</span>
-                    <span className="text-[#9da6b9] text-xs">{formatDuration(duration)}s Total Duration</span>
+                    <span className="text-[#9da6b9] text-xs">{formateDuration(duration)}s Total Duration</span>
                 </div>
             </div>
             <div className="flex items-center gap-6">

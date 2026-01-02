@@ -20,7 +20,7 @@ export const formateDateTime = (dateString: string) => {
 
 }
 
-export const formatDuration = (seconds: number) => {
+export const formateDuration = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = Math.floor(seconds % 60);

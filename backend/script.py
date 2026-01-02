@@ -1,7 +1,7 @@
 from sqlmodel import Session,select,text,Date
 from sqlalchemy import func,cast,Integer,FLOAT
 from api.db import get_db
-from api.db.models import SessionRecords,SessionReports,Users
+from api.db.models import SessionRecords,SessionReports,Users,TaskStatus
 
 db = next(get_db())
 def run():
@@ -66,5 +66,17 @@ def run():
 
     print(results)
 
-run()
+# run()
 
+
+def mark_pending():
+    obj = db.exec(select(SessionRecords)).all()[0]
+    print(obj.status)
+    obj.status = TaskStatus.FINISH
+    db.commit()
+    db.refresh(obj)
+    print(obj.status)
+
+
+
+mark_pending()

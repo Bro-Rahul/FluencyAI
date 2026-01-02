@@ -12,28 +12,68 @@ import Image from "next/image"
 import { useState } from "react"
 import { Button } from "../ui/button"
 import clsx from "clsx"
+import { formateDuration } from "@/utils/helper"
+import useRecording from "@/hooks/useRecording"
 
 interface RecordingDialogProps {
-    hasRecordingPermission: boolean
-    onClick: () => void
+    handleFile: (file: Blob | FileList | null) => void
+
 }
 
-const RecordingDialog = ({ hasRecordingPermission, onClick }: RecordingDialogProps) => {
-    const [recording, setRecording] = useState<boolean>(false)
-    const handleRecord = async () => {
-        const state = await navigator.mediaDevices.getUserMedia({ audio: true })
-        const mediaDevice = new MediaStream(state);
-        mediaDevice
+const RecordingDialog = ({ handleFile }: RecordingDialogProps) => {
+    const [audioURL, setAudioURL] = useState<string | null>(null);
+    const [startedRecording, setStartedRecording] = useState<boolean>(false);
+    const {
+        recordingState,
+        recordingTime,
+        start,
+        pause,
+        resume,
+        stop,
+        setRecordingState
+    } = useRecording()
+
+    const handleStop = async () => {
+        setRecordingState("stop");
+        setStartedRecording(false);
+
+        const audioBlob = await stop();
+
+        if (audioBlob.size === 0) {
+            console.error("Empty recording");
+            return;
+        }
+
+        handleFile(audioBlob);
+        const url = URL.createObjectURL(audioBlob);
+        setAudioURL(url);
+    };
+
+
+    const togglePlayAndPause = () => {
+        if (!startedRecording) {
+            setStartedRecording(true);
+            setRecordingState("play")
+            start();
+            return;
+        }
+        if (recordingState === "pause") {
+            resume();
+            setRecordingState("play")
+        } else {
+            pause();
+            setRecordingState("pause")
+
+        }
     }
+
     return (
         <Dialog>
             <DialogTrigger
-                onClick={() => onClick()}
-                disabled={!hasRecordingPermission}
                 className="bg-blue-600 hover:bg-blue-500 text-white py-2 px-6 rounded-md outline-none">
                 Record
             </DialogTrigger>
-            <DialogContent className="bg-[#1c1f27]" showCloseButton={false}>
+            <DialogContent className="bg-[#1c1f27] flex-col w-full justify-center" showCloseButton={false}>
                 <DialogHeader className="flex flex-col items-center gap-2 w-full">
                     <DialogTitle
                         className="text-white text-xl font-bold leading-tight">
@@ -44,9 +84,9 @@ const RecordingDialog = ({ hasRecordingPermission, onClick }: RecordingDialogPro
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex flex-col w-full py-6">
-                    <AudioAnimation recording={recording} />
+                    <AudioAnimation recording={recordingState === "play"} />
                     <div className="flex flex-col items-center gap-1 mb-5">
-                        <span className="text-white text-4xl font-mono font-bold tracking-wider">00:04</span>
+                        <span className="text-white text-4xl font-mono font-bold tracking-wider">{formateDuration(recordingTime)}</span>
                         <span className="text-[#9da6b9] text-xs uppercase tracking-widest font-medium">Recording Time</span>
                     </div>
                     <div className="flex items-center gap-6 w-full justify-center pt-4">
@@ -57,18 +97,22 @@ const RecordingDialog = ({ hasRecordingPermission, onClick }: RecordingDialogPro
                             </Button>
                         </DialogClose>
                         <Button
-                            onClick={() => setRecording(pre => !pre)}
+                            onClick={togglePlayAndPause}
                             className="flex items-center justify-center rounded-full size-20 bg-[#135bec] text-white shadow-lg shadow-blue-900/20 hover:bg-[#1d64f2] transition-colors relative group cursor-pointer">
                             <span
-                                className={clsx("absolute inset-0 rounded-full border border-white/20", recording && "animate-[ping_2s_ease-out_infinite]")}></span>
-                            <Image src={recording ? svg.pauseSVG : svg.playSVG} alt="close svg" width={45} height={45} />
+                                className={clsx("absolute inset-0 rounded-full border border-white/20", recordingState === "play" && "animate-[ping_2s_ease-out_infinite]")}></span>
+                            <Image src={recordingState === "play" ? svg.pauseSVG : svg.playSVG} alt="close svg" width={45} height={45} />
                         </Button>
                         <Button
+                            onClick={handleStop}
                             className="flex items-center justify-center rounded-full size-14 bg-[#ef4444] text-white hover:bg-[#dc2626] transition-colors group cursor-pointer">
                             <Image src={svg.squareSVG} alt="Save svg" />
                         </Button>
                     </div>
                 </div>
+                {audioURL &&
+                    <audio src={audioURL} controls />
+                }
             </DialogContent>
         </Dialog>
     )

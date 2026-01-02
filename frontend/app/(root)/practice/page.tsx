@@ -4,18 +4,21 @@ import UploadAudios from "@/components/practice/UploadAudios";
 import useAudioPlayer from "@/hooks/useAudioPlayer";
 
 const PracticePage = () => {
-    const { audioFile, handleFile } = useAudioPlayer();
+    const { fileDetails, handleFileUpload, handleDuration } = useAudioPlayer();
 
     return (
         <div className="min-h-screen text-white px-6 py-10">
             <AudioPlayer
-                audioFile={audioFile}
+                handleDuration={handleDuration}
+                duration={fileDetails.duration}
+                audioURL={fileDetails.audioURL}
+                fileName={fileDetails.fileName}
             />
             <UploadAudios
-                audioFile={audioFile}
-                handleFileUpload={handleFile}
+                duration={fileDetails.duration}
+                file={fileDetails.fileData}
+                handleFile={handleFileUpload}
             />
-
         </div>
     );
 };

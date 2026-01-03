@@ -27,6 +27,7 @@ import githubSVG from "@/public/svg/github.svg"
 import profileSVG from "@/public/svg/profile.svg"
 import closeSVG from "@/public/svg/close.svg"
 import squareSVG from "@/public/svg/square.svg"
+import arrowLeftSVG from "@/public/svg/arrowLeft.svg"
 
 
 
@@ -61,7 +62,8 @@ const svg = {
     googleSVG,
     profileSVG,
     closeSVG,
-    squareSVG
+    squareSVG,
+    arrowLeftSVG
 }
 
 export default svg;

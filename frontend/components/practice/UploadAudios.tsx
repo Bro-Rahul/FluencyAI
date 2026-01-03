@@ -6,6 +6,7 @@ import { ChangeEvent, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { postCreateNewSession } from '@/https/sessions/sessionRecord'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 interface UploadAudiosProps {
     file: File | Blob | null,
@@ -15,6 +16,7 @@ interface UploadAudiosProps {
 
 const UploadAudios = ({ handleFile, file, duration }: UploadAudiosProps) => {
     const { data } = useSession();
+    const router = useRouter()
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     const handleClick = () => {
@@ -32,24 +34,23 @@ const UploadAudios = ({ handleFile, file, duration }: UploadAudiosProps) => {
     }
 
     const handleFileUpload = async () => {
-        if (file) {
-            const request = postCreateNewSession(data?.user.access_token!, file, duration);
-            toast.promise(request, {
-                loading: "Creating new Session !",
-                success: "Session has been succssfully Queued ",
-                error: (e) => e.toString()
-            }, {
-                position: "bottom-right",
-                duration: 5000
-            })
-            try {
-                const response = await request;
-                console.log(response)
-            } catch (err) {
-                console.log(err)
-            }
-
+        if (!file) return;
+        const request = postCreateNewSession(data?.user.access_token!, file, duration);
+        toast.promise(request, {
+            loading: "Creating new Session !",
+            success: "Session has been succssfully Queued ",
+            error: (e) => e.toString()
+        }, {
+            position: "bottom-right",
+            duration: 5000
+        })
+        try {
+            await request;
+            router.push("/sessions")
+        } catch (err) {
+            console.log(err)
         }
+
     }
     return (
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">

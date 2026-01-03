@@ -1,7 +1,11 @@
-from sqlmodel import Session,select,text,Date
+from sqlmodel import Session,select,text,Date,or_
 from sqlalchemy import func,cast,Integer,FLOAT
 from api.db import get_db
 from api.db.models import SessionRecords,SessionReports,Users,TaskStatus
+from pathlib import Path
+from api.tasks import generate_report
+
+path = Path(__file__).parent / "api" / "media" / "audios"
 
 db = next(get_db())
 def run():
@@ -66,17 +70,33 @@ def run():
 
     print(results)
 
-# run()
 
-
-def mark_pending():
-    obj = db.exec(select(SessionRecords)).all()[0]
-    print(obj.status)
-    obj.status = TaskStatus.FINISH
+def set_pending(id:int):
+    record = db.exec(select(SessionRecords).where(SessionRecords.id == id)).first()
+    print(record)
+    record.status = TaskStatus.PENDING
     db.commit()
-    db.refresh(obj)
-    print(obj.status)
+
+def set_finish(id:int):
+    record = db.exec(select(SessionRecords).where(SessionRecords.id == id)).first()
+    print(record)
+    record.status = TaskStatus.FINISH
+    db.commit()
+
+
+def get_status(id:int):
+    record = db.exec(select(SessionRecords).where(SessionRecords.id == id)).first()
+    print(record.status)
+
+# set_pending(12)
+set_finish(12)
+get_status(12)
 
 
 
-mark_pending()
+def filter():
+    result = db.exec(select(SessionRecords).order_by(SessionRecords.id.desc()))
+    for item in result:
+        print(item.id)
+
+# filter()

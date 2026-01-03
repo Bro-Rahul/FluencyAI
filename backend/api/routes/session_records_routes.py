@@ -13,8 +13,11 @@ from fastapi.encoders import jsonable_encoder
 import asyncio
 import json
 from api.schema.session_record_schema import SessionStatisticsSchema
+from . import session_records_filter_routes
 
 router = APIRouter(prefix="/sessions")
+
+router.include_router(session_records_filter_routes.router,tags=["sessions record filter"])
 
 @router.get("/")
 async def list_sessions_sse(
@@ -47,12 +50,6 @@ async def create_session(
     duration:float = Form(...,ge=0),
     db = Depends(get_db)
 ):
-    try:
-        num = int(duration)
-    except Exception as e:
-        raise HTTPException(
-            detail="Error"
-        )
     new_session = await create_new_session(user.id,audio_file,int(duration),db)
     return new_session
 
@@ -65,4 +62,3 @@ def get_stats(
 ):
     result = get_user_statistics(db,user.id)
     return result
-

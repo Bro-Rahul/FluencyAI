@@ -34,9 +34,8 @@ const ReportPage = async ({ params }: ReportPageProps) => {
                             key={tab.lable}
                             className={clsx(
                                 "bg-transparent border-0 rounded-none shadow-none",
-                                "px-3 py-4 cursor-pointer border-b-2 border-transparent",
-                                "data-[state=active]:border-blue-500",
-                                "data-[state=active]:text-blue-500"
+                                "px-3 py-4 cursor-pointer border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:text-blue-500",
+
                             )}
                         >
                             <p className="inline-flex justify-center items-center gap-1">

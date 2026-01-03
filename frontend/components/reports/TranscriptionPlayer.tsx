@@ -4,6 +4,7 @@ import svg from "@/constants/svgs"
 import { baseAssetsURL } from "@/https"
 import { useRef, useState } from "react"
 import { formateDuration } from "@/utils/helper"
+import { Button } from "../ui/button"
 
 interface TranscriptionPlayerProps {
     audioFileName: string,
@@ -26,11 +27,11 @@ const TranscriptionPlayer = ({ audioFileName, duration }: TranscriptionPlayerPro
             className="flex flex-wrap items-center justify-between gap-4 bg-[#1c1f27] p-4 rounded-xl border border-[#282e39]">
             <div className="flex items-center gap-4">
                 <audio src={`${baseAssetsURL}/audios/${audioFileName}`} ref={audioRef} />
-                <button
+                <Button
                     onClick={handlePlayAndPause}
                     className="flex items-center justify-center size-10 rounded-full bg-[#135bec] text-white hover:bg-[#1d64f2] transition-colors shadow-md">
                     <Image src={isPlaying ? svg.pauseSVG : svg.playSVG} alt='Audio controller btn' />
-                </button>
+                </Button>
                 <div className="flex flex-col">
                     <span className="text-white font-bold text-sm">Play Recording</span>
                     <span className="text-[#9da6b9] text-xs">{formateDuration(duration)}s Total Duration</span>

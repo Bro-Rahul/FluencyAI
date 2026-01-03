@@ -8,7 +8,7 @@ export interface SessionRecordsType {
     title: string,
     description: string,
     duration: number
-    status: string,
+    status: "finish" | "pending",
     score: string | null
     created_at: string
 }

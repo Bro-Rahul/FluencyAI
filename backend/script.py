@@ -3,7 +3,11 @@ from sqlalchemy import func,cast,Integer,FLOAT
 from api.db import get_db
 from api.db.models import SessionRecords,SessionReports,Users,TaskStatus
 from pathlib import Path
-from api.tasks import generate_report
+from api.filters.session_record_filter import SessionRecordFilter
+from api.pagination.response import PaginatedResponse
+from api.schema.session_record_schema import SessionRecordSchema
+import json
+from fastapi.encoders import jsonable_encoder
 
 path = Path(__file__).parent / "api" / "media" / "audios"
 
@@ -100,3 +104,22 @@ def filter():
         print(item.id)
 
 # filter()
+
+def get_paginated(key:str):
+    
+    rows = db.exec(SessionRecordFilter.query("created_at")).mappings().all()
+    filter_data = [SessionRecordSchema(**item) for item in rows]
+    response = PaginatedResponse.get_paginated_response(filter_data,key)
+    return response
+
+# get_paginated()
+
+def fetch(key:str):
+    data = PaginatedResponse.query_key(key)
+    if data is None:
+        data = get_paginated(key)
+    
+    for item in data:
+        print(item)
+
+fetch("yash")

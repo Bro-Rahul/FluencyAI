@@ -28,6 +28,9 @@ import profileSVG from "@/public/svg/profile.svg"
 import closeSVG from "@/public/svg/close.svg"
 import squareSVG from "@/public/svg/square.svg"
 import arrowLeftSVG from "@/public/svg/arrowLeft.svg"
+import cameraSVG from "@/public/svg/camera.svg"
+import editSVG from "@/public/svg/edit.svg"
+import settingSVG from "@/public/svg/setting.svg"
 
 
 
@@ -63,7 +66,10 @@ const svg = {
     profileSVG,
     closeSVG,
     squareSVG,
-    arrowLeftSVG
+    arrowLeftSVG,
+    cameraSVG,
+    settingSVG,
+    editSVG
 }
 
 export default svg;

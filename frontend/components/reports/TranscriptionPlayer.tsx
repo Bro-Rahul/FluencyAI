@@ -30,7 +30,13 @@ const TranscriptionPlayer = ({ audioFileName, duration }: TranscriptionPlayerPro
                 <Button
                     onClick={handlePlayAndPause}
                     className="flex items-center justify-center size-10 rounded-full bg-[#135bec] text-white hover:bg-[#1d64f2] transition-colors shadow-md">
-                    <Image src={isPlaying ? svg.pauseSVG : svg.playSVG} alt='Audio controller btn' />
+                    <Image
+                        src={isPlaying ? svg.pauseSVG : svg.playSVG}
+                        alt='play audio'
+                        style={{
+                            scale: 2.5
+                        }}
+                    />
                 </Button>
                 <div className="flex flex-col">
                     <span className="text-white font-bold text-sm">Play Recording</span>

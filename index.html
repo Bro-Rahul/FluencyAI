@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style"
+        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+        onload="this.rel='stylesheet'" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <title>Stitch Design</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+  --primary: #135bec;
+}
+.timeline-grid {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    gap: 4px;
+}
+.timeline-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+.level-0 { background-color: #282e39; }
+.level-1 { background-color: #0e3a96; }
+.level-2 { background-color: #135bec; }
+.level-3 { background-color: #4f85f6; }
+.level-4 { background-color: #92bbfd; }
+</style>
+</head>
+
+<body>
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#111318] dark group/design-root overflow-x-hidden"
+        style='font-family: Inter, "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#282e39] px-10 py-3">
+                <div class="flex items-center gap-4 text-white">
+                    <div class="size-4">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                                fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">LinguaSpeak</h2>
+                </div>
+                <div class="flex flex-1 justify-end gap-8">
+                    <div class="flex items-center gap-9">
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Home</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Practice</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Lessons</a>
+                        <a class="text-white text-sm font-medium leading-normal" href="#">Community</a>
+                    </div>
+                    <button
+                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#282e39] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                        <div class="text-white" data-icon="Bell" data-size="20px" data-weight="regular">
+                            <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOKoupCKiQEz52C0w8d-DoV5_JDaPEE2qqAQdYuLLsor-fjtUIMqSuWB4Gk4cSW0GPkpDY3sxh81Fvjk5ICsEiUi1ZKry-1X5eP9dmdEVcCAEqaitWM-yiarZD6p1dVHa2PD88zRQI2Y9ZgszWwe9ZMBJoxZ00Qd7WKKnMMEVWfA5saPyjT1Snj4laAEip3F_rFTh665TXAEliENf8dn02B7HW1r29lDIGbTbFzAxIyunw5WA3i9NqeyY7nk4aLZRBtsJ2JJipfMqW");'>
+                    </div>
+                </div>
+            </header>
+            <div class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-8">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1 gap-8">
+                    <div
+                        class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-[#1c1f27] p-8 rounded-2xl border border-[#282e39]">
+                        <div class="flex items-center gap-6">
+                            <div class="relative">
+                                <div class="size-24 rounded-full bg-cover bg-center border-4 border-[#282e39]"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOKoupCKiQEz52C0w8d-DoV5_JDaPEE2qqAQdYuLLsor-fjtUIMqSuWB4Gk4cSW0GPkpDY3sxh81Fvjk5ICsEiUi1ZKry-1X5eP9dmdEVcCAEqaitWM-yiarZD6p1dVHa2PD88zRQI2Y9ZgszWwe9ZMBJoxZ00Qd7WKKnMMEVWfA5saPyjT1Snj4laAEip3F_rFTh665TXAEliENf8dn02B7HW1r29lDIGbTbFzAxIyunw5WA3i9NqeyY7nk4aLZRBtsJ2JJipfMqW");'>
+                                </div>
+                                <div
+                                    class="absolute bottom-0 right-0 bg-[#135bec] p-1.5 rounded-full border-2 border-[#1c1f27]">
+                                    <span
+                                        class="material-symbols-outlined text-[16px] text-white block">photo_camera</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <h1 class="text-3xl font-bold text-white">Alex Morgan</h1>
+                                <div class="flex items-center gap-3 text-[#9da6b9] text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[18px]">mail</span>
+                                        alex.morgan@example.com</span>
+                                    <span class="size-1 bg-[#3b4354] rounded-full"></span>
+                                    <span>Joined September 2023</span>
+                                </div>
+                                <div class="flex gap-2 mt-2">
+                                    <span
+                                        class="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-white uppercase tracking-wide">Level:
+                                        B2 Intermediate</span>
+                                    <span
+                                        class="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-[#135bec] uppercase tracking-wide">Pro
+                                        Member</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 w-full md:w-auto">
+                            <button
+                                class="flex-1 md:flex-none items-center justify-center gap-2 bg-[#282e39] hover:bg-[#3b4354] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-colors border border-[#3b4354] flex">
+                                <span class="material-symbols-outlined text-[18px]">settings</span>
+                                Settings
+                            </button>
+                            <button
+                                class="flex-1 md:flex-none items-center justify-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-colors flex">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-1">
+                            <span class="text-[#9da6b9] text-xs font-bold uppercase tracking-wider">Total Time</span>
+                            <p class="text-2xl font-bold text-white">14h 20m</p>
+                        </div>
+                        <div class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-1">
+                            <span class="text-[#9da6b9] text-xs font-bold uppercase tracking-wider">Sessions</span>
+                            <p class="text-2xl font-bold text-white">42</p>
+                        </div>
+                        <div class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-1">
+                            <span class="text-[#9da6b9] text-xs font-bold uppercase tracking-wider">Avg. Score</span>
+                            <p class="text-2xl font-bold text-white">82%</p>
+                        </div>
+                        <div class="bg-[#1c1f27] p-4 rounded-xl border border-[#282e39] flex flex-col gap-1">
+                            <span class="text-[#9da6b9] text-xs font-bold uppercase tracking-wider">Vocabulary</span>
+                            <p class="text-2xl font-bold text-white">450+</p>
+                        </div>
+                    </div>
+                    <div class="bg-[#1c1f27] rounded-xl border border-[#282e39] p-6 flex flex-col gap-6">
+                        <div class="flex justify-between items-center flex-wrap gap-4">
+                            <div>
+                                <h3 class="text-white font-bold text-lg">Practice Activity</h3>
+                                <p class="text-[#9da6b9] text-sm">342 contributions in the last year</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-2 text-xs text-[#9da6b9]">
+                                    <span>Less</span>
+                                    <div class="flex gap-1">
+                                        <div class="size-3 rounded-sm bg-[#282e39]"></div>
+                                        <div class="size-3 rounded-sm bg-[#0e3a96]"></div>
+                                        <div class="size-3 rounded-sm bg-[#135bec]"></div>
+                                        <div class="size-3 rounded-sm bg-[#4f85f6]"></div>
+                                        <div class="size-3 rounded-sm bg-[#92bbfd]"></div>
+                                    </div>
+                                    <span>More</span>
+                                </div>
+                                <select
+                                    class="bg-[#282e39] border-none text-white text-sm rounded-lg py-1.5 px-3 focus:ring-1 focus:ring-[#135bec] outline-none">
+                                    <option>2024</option>
+                                    <option>2023</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-full overflow-x-auto pb-2">
+                            <div class="flex gap-2 min-w-max">
+                                <div
+                                    class="flex flex-col justify-between text-[10px] text-[#9da6b9] pr-2 h-[108px] font-medium py-1">
+                                    <span>Mon</span>
+                                    <span>Wed</span>
+                                    <span>Fri</span>
+                                </div>
+                                <div class="timeline-grid h-[112px]">
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-0"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-4"></div>
+                                    <div class="timeline-cell level-3"></div>
+                                    <div class="timeline-cell level-2"></div>
+                                    <div class="timeline-cell level-1"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-xs text-[#9da6b9] px-6 pt-2 w-full max-w-[800px]">
+                                <span>Jan</span>
+                                <span>Feb</span>
+                                <span>Mar</span>
+                                <span>Apr</span>
+                                <span>May</span>
+                                <span>Jun</span>
+                                <span>Jul</span>
+                                <span>Aug</span>
+                                <span>Sep</span>
+                                <span>Oct</span>
+                                <span>Nov</span>
+                                <span>Dec</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-[#1c1f27] rounded-xl border border-[#282e39] p-6 flex flex-col gap-6">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-white font-bold text-base">Current Focus</h3>
+                            <button class="text-[#135bec] text-xs font-bold hover:text-[#3b82f6]">Edit Goals</button>
+                        </div>
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#d1d5db]">Weekly Speaking Time</span>
+                                    <span class="text-white font-bold">45 / 60 min</span>
+                                </div>
+                                <div class="h-2 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#22c55e] w-[75%] rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#d1d5db]">Sessions Completed</span>
+                                    <span class="text-white font-bold">3 / 5</span>
+                                </div>
+                                <div class="h-2 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#eab308] w-[60%] rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#d1d5db]">New Words Learned</span>
+                                    <span class="text-white font-bold">12 / 20</span>
+                                </div>
+                                <div class="h-2 w-full bg-[#282e39] rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#135bec] w-[60%] rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="flex justify-center">
+            <div class="flex max-w-[960px] flex-1 flex-col">
+                <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
+                    <div
+                        class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+                        <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Privacy
+                            Policy</a>
+                        <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Terms of
+                            Service</a>
+                        <a class="text-[#9da6b9] text-base font-normal leading-normal min-w-40" href="#">Contact Us</a>
+                    </div>
+                    <p class="text-[#9da6b9] text-base font-normal leading-normal">© 2024 LinguaSpeak. All rights
+                        reserved.</p>
+                </footer>
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+</html>

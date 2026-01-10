@@ -20,11 +20,9 @@ def list_sessions(db:Session):
         .order_by(SessionReports.created_at.desc())
         .join(SessionReports)
     )
-    rows = db.exec(statement).all()
-    return [
-        SessionRecordSchema(**row._mapping)
-        for row in rows
-    ]
+    rows = db.exec(statement).mappings().all()
+    return rows
+   
 
 def list_pending_sessions(db:Session,pending_list:list[int]):
     statement = (
@@ -45,11 +43,8 @@ def list_pending_sessions(db:Session,pending_list:list[int]):
         )
         .join(SessionReports)
     )
-    rows = db.exec(statement).all()
-    return [
-        SessionRecordSchema(**row._mapping)
-        for row in rows
-    ]
+    rows = db.exec(statement).mappings().all()
+    return rows
 
 def get_user_statistics(db:Session,user_id:int):
     results = db.exec(

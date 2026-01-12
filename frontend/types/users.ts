@@ -12,3 +12,9 @@ export interface LoginUserType {
     username: string,
     password: string
 }
+
+
+export interface UserHeatMapType {
+    total: number,
+    date: string
+}

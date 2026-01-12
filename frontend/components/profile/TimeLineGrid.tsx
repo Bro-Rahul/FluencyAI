@@ -1,4 +1,8 @@
+import { options } from "@/app/api/auth/[...nextauth]/options"
+import { getUserHeatMap } from "@/https/users/users"
 import dayjs from "dayjs"
+import { getServerSession } from "next-auth"
+import clsx from "clsx"
 
 const MONTHS = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -12,16 +16,20 @@ function getDaysOfYear(year: number) {
 
     let current = start
     while (current.isBefore(end) || current.isSame(end)) {
-        days.push(current)
+        days.push(current.format("YYYY-MM-DD").toString())
         current = current.add(1, "day")
     }
-
     return days
 }
 
-export default function TimeLineGrid() {
-    const year = 2026
+const TimeLineGrid = async () => {
+    const year = 2025
     const days = getDaysOfYear(year)
+    const session = await getServerSession(options);
+    const response = await getUserHeatMap(session!.user.access_token);
+    const map = new Map(
+        response.map(item => [item.date, item.total])
+    );
 
     return (
         <div className="bg-[#1c1f27] w-full rounded-xl">
@@ -43,36 +51,30 @@ export default function TimeLineGrid() {
                         className="grid grid-rows-7 grid-flow-col auto-cols-max gap-1.5 pb-2"
                     >
                         {days.map((day, i) => (
-                            <ContributionCell key={i} date={day} />
+                            <ContributionCell
+                                key={i}
+                                date={day}
+                                total={map.get(day) !== undefined ? map.get(day)! : 0}
+                            />
                         ))}
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
 
+export default TimeLineGrid;
 
-const ContributionCell = ({ date }: { date: dayjs.Dayjs }) => {
-    const level = Math.floor(Math.random() * 5)
-
-    const COLORS = [
-        "bg-[#282e39]",
-        "bg-[#0e3a96]",
-        "bg-[#135bec]",
-        "bg-[#4f85f6]",
-        "bg-[#92bbfd]",
-    ]
-
+const ContributionCell = ({ date, total }: { date: string, total: number }) => {
+    const index = Math.min(total, 4);
     return (
         <div
-            title={date.format("DD MMM YYYY")}
-            className={`
-        w-3.75 h-3.75
-        rounded-sm
-        ${COLORS[level]}
-      `}
+            title={`Total ${total} sessions on ${date}`}
+            className={clsx(
+                'w-3.75 h-3.75 rounded-sm',
+                `color-${index}`
+            )}
         />
     )
 }
@@ -95,10 +97,10 @@ const MetaDetails = () => {
                         <span>Less</span>
                         <div className="flex gap-1">
                             <div className="size-3 rounded-sm bg-[#282e39]" />
-                            <div className="size-3 rounded-sm bg-[#0e3a96]" />
-                            <div className="size-3 rounded-sm bg-[#135bec]" />
-                            <div className="size-3 rounded-sm bg-[#4f85f6]" />
-                            <div className="size-3 rounded-sm bg-[#92bbfd]" />
+                            <div className="size-3 rounded-sm bg-[#3b82f6]" />
+                            <div className="size-3 rounded-sm bg-[#2563eb]" />
+                            <div className="size-3 rounded-sm bg-[#2563eb]" />
+                            <div className="size-3 rounded-sm bg-[#1e40af]" />
                         </div>
                         <span>More</span>
                     </div>

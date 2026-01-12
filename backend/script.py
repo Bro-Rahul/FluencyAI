@@ -93,9 +93,8 @@ def get_status(id:int):
     print(record.status)
 
 # set_pending(12)
-set_finish(12)
-get_status(12)
-
+# set_finish(12)
+# get_status(12)
 
 
 def filter():
@@ -122,4 +121,17 @@ def fetch(key:str):
     for item in data:
         print(item)
 
-fetch("yash")
+def get_heatmap():
+    stmt = (
+        select(
+            func.count().label("total"),
+            cast(SessionRecords.created_at, Date).label("date")
+        ).filter(SessionRecords.user_id == 1)
+        .group_by(cast(SessionRecords.created_at, Date))
+    )
+    result = db.exec(stmt).mappings().all()
+    return result
+
+result = get_heatmap()
+for item in result:
+    print(item)

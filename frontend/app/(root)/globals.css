@@ -142,4 +142,22 @@
   .scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  .color-0{
+    background-color: #282e39;
+  }
+
+  .color-1{
+    background-color: #3b82f6;
+  }
+  
+  .color-2{
+    background-color: #2563eb;
+  }
+  .color-3{
+    background-color: #2563eb
+  }
+  .color-4{
+    background-color: #1e40af;
+  }  
 }

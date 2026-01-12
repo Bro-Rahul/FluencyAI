@@ -1,5 +1,6 @@
 from pydantic import BaseModel,constr,EmailStr
 from typing import Annotated
+from datetime import date
 
 
 class UserCreateSchema(BaseModel):
@@ -13,3 +14,7 @@ class UserResponseSchema(BaseModel):
     email : str
     avatar : str|None
     score : int
+
+class UserHeatMapSchema(BaseModel):
+    date: date
+    total : int

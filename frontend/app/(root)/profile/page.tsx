@@ -1,7 +1,13 @@
+import { options } from '@/app/api/auth/[...nextauth]/options'
 import ProfileCard from '@/components/profile/ProfileCard'
 import TimeLineGrid from '@/components/profile/TimeLineGrid'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+    const session = await getServerSession(options);
+    if (!session) return redirect("/auth/login");
+
     return (
         <div className="flex flex-col gap-8 w-full container mx-auto max-w-300 mt-5">
             <ProfileCard />
@@ -24,7 +30,9 @@ const ProfilePage = () => {
                 </div>
             </div>
 
-            <TimeLineGrid />
+            <TimeLineGrid
+                profileCreated={session.user.created_at}
+            />
             <div className="bg-[#1c1f27] rounded-xl border border-[#282e39] p-6 flex flex-col gap-6">
                 <div className="flex justify-between items-center">
                     <h3 className="text-white font-bold text-base">Current Focus</h3>

@@ -22,3 +22,10 @@ export const ResultsTabList = [
         icon: svg.equalizerSVG
     },
 ]
+
+export const MONTHS = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+]
+
+export const DAYSOFWEEK = ["", "Mon", "", "Wed", "", "Fri", ""];

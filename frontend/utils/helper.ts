@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 export const formateDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -31,3 +32,17 @@ export const formateDuration = (seconds: number) => {
         secs.toString().padStart(2, "0"),
     ].join(":");
 };
+
+
+export function getDaysOfYear(year: number) {
+    const start = dayjs(`${year}-01-01`)
+    const end = dayjs(`${year}-12-31`)
+    const days = []
+
+    let current = start
+    while (current.isBefore(end) || current.isSame(end)) {
+        days.push(current.format("YYYY-MM-DD").toString())
+        current = current.add(1, "day")
+    }
+    return days
+}

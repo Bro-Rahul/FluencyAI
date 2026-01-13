@@ -5,6 +5,7 @@ export interface UserType {
     avatar: string | null,
     score: number,
     access_token: string,
+    created_at: string,
 }
 
 

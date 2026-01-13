@@ -1,6 +1,6 @@
 import svg from '@/constants/svgs'
-import React from 'react'
 import Image from 'next/image'
+import images from '@/constants/images'
 
 const ProfileCard = () => {
     return (
@@ -8,10 +8,14 @@ const ProfileCard = () => {
             className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-[#1c1f27] p-8 rounded-2xl border border-[#282e39]">
             <div className="flex items-center gap-6">
                 <div className="relative">
-
-                    <div
-                        className="size-24 rounded-full bg-cover bg-center border-4 border-[#282e39]
-             bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOKoupCKiQEz52C0w8d-DoV5_JDaPEE2qqAQdYuLLsor-fjtUIMqSuWB4Gk4cSW0GPkpDY3sxh81Fvjk5ICsEiUi1ZKry-1X5eP9dmdEVcCAEqaitWM-yiarZD6p1dVHa2PD88zRQI2Y9ZgszWwe9ZMBJoxZ00Qd7WKKnMMEVWfA5saPyjT1Snj4laAEip3F_rFTh665TXAEliENf8dn02B7HW1r29lDIGbTbFzAxIyunw5WA3i9NqeyY7nk4aLZRBtsJ2JJipfMqW')]"/>
+                    <Image
+                        src={images.profileImage}
+                        alt='profile'
+                        width={100}
+                        height={100}
+                        priority
+                        className='rounded-full border border-white p-0.5'
+                    />
                     <div
                         className="absolute bottom-0 right-0 bg-[#135bec] p-1 rounded-full border-2 border-[#1c1f27]">
                         <Image src={svg.cameraSVG} alt='Profile Icon' />

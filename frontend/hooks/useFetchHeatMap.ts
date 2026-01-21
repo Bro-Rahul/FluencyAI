@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import dayjs from 'dayjs'
 import { getUserHeatMap } from '@/https/users/users'
 import { UserHeatMapType } from '@/types/users'
 
 const useFetchHeatMap = (
-    accountCreatedDate: string,
+    yearToFetch: number,
     accessToken: string | undefined
 ) => {
-    const [year, setYear] = useState(() => dayjs(accountCreatedDate).year())
     const [heatMapData, setHeatMapData] = useState<UserHeatMapType[] | null>(null)
     const mapperRef = useRef<Map<string, number>>(new Map())
     const totalSession = useRef<number>(0);
@@ -16,7 +14,8 @@ const useFetchHeatMap = (
         if (!accessToken) return
 
         async function fetchHeatMap() {
-            const response = await getUserHeatMap(accessToken!)
+            const response = await getUserHeatMap(accessToken!, yearToFetch)
+            console.log(response);
 
             setHeatMapData(response)
             mapperRef.current.clear()
@@ -29,14 +28,12 @@ const useFetchHeatMap = (
         }
 
         fetchHeatMap()
-    }, [year, accessToken])
+    }, [accessToken, yearToFetch])
 
     return {
-        year,
         mapperRef,
         heatMapData,
         totalSession,
-        setYear,
     }
 }
 

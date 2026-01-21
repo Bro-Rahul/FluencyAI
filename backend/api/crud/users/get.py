@@ -16,12 +16,20 @@ def list_all_users(db:Session):
     return db.exec(select(Users)).all()
 
 
-def get_user_heatmap(id:int,db:Session):
+def get_user_heatmap(
+    id:int,
+    year:int,
+    db:Session
+):
     stmt = (
             select(
-                func.count().label("total"),
-                cast(SessionRecords.created_at, Date).label("date")
-            ).filter(SessionRecords.user_id == id)
+            func.count().label("total"),
+            cast(SessionRecords.created_at, Date).label("date")
+            )
+            .where(
+                func.extract("year",SessionRecords.created_at) == year,
+                SessionRecords.user_id == id
+            )
             .group_by(cast(SessionRecords.created_at, Date))
         )
     result = db.exec(stmt).mappings().all()

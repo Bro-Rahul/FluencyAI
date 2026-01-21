@@ -20,7 +20,8 @@ def list_users(
 
 @router.get("/heat-map/",response_model=List[UserHeatMapSchema])
 def user_heatmap(
+    year:int,
     user = Depends(authenticated_user),
     db = Depends(get_db),
 ):
-    return get_user_heatmap(user.id,db)
+    return get_user_heatmap(user.id,year,db)

@@ -16,8 +16,8 @@ export const login = async (crediencial: LoginUserType) => {
     return res
 }
 
-export const getUserHeatMap = async (token: string): Promise<UserHeatMapType[]> => {
-    const res = await fetch(`${USERBASEURL}/heat-map/`, {
+export const getUserHeatMap = async (token: string, year: number): Promise<UserHeatMapType[]> => {
+    const res = await fetch(`${USERBASEURL}/heat-map/?year=${year}`, {
         headers: {
             "Authorization": `Bearer ${token}`,
         }

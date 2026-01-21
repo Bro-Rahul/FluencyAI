@@ -126,7 +126,11 @@ def get_heatmap():
         select(
             func.count().label("total"),
             cast(SessionRecords.created_at, Date).label("date")
-        ).filter(SessionRecords.user_id == 1)
+        )
+        .where(
+            func.extract("year",SessionRecords.created_at) == 2025,
+            SessionRecords.user_id == 1
+        )
         .group_by(cast(SessionRecords.created_at, Date))
     )
     result = db.exec(stmt).mappings().all()

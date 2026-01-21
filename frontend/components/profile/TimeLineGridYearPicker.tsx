@@ -7,13 +7,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import dayjs from "dayjs"
 
 interface TimeLineGridYearPickerProps {
     year: number,
+    selectYear: (selectedYear: number) => void
+    createdYear: number,
     totalSessions: number
 }
 
-const TimeLineGridYearPicker = ({ year, totalSessions }: TimeLineGridYearPickerProps) => {
+const TimeLineGridYearPicker = ({ year, createdYear, totalSessions, selectYear }: TimeLineGridYearPickerProps) => {
+    const years = Array.from({ length: dayjs().year() - createdYear + 1 }, (_, idx) => createdYear + idx);
     return (
         <div className="p-6 flex flex-col gap-6">
             <div className="flex justify-between items-center flex-wrap gap-4">
@@ -39,21 +43,25 @@ const TimeLineGridYearPicker = ({ year, totalSessions }: TimeLineGridYearPickerP
                         <span>More</span>
                     </div>
 
-                    <Select >
+                    <Select value={year.toString()} onValueChange={e => selectYear(+e)}>
                         <SelectTrigger className="w-45">
-                            <SelectValue placeholder="Select a fruit" />
+                            <SelectValue placeholder="Select year" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Fruits</SelectLabel>
-                                <SelectItem value="apple">Apple</SelectItem>
-                                <SelectItem value="banana">Banana</SelectItem>
-                                <SelectItem value="blueberry">Blueberry</SelectItem>
-                                <SelectItem value="grapes">Grapes</SelectItem>
-                                <SelectItem value="pineapple">Pineapple</SelectItem>
+                                <SelectLabel>Year</SelectLabel>
+                                {years.map((item) => (
+                                    <SelectItem
+                                        key={item}
+                                        value={item.toString()}
+                                    >
+                                        {item}
+                                    </SelectItem>
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
+
                 </div>
             </div>
         </div>

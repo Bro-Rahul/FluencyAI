@@ -2,7 +2,6 @@
 import useServerSideEvent from "@/hooks/useServerSideEvent"
 import SessionFilters from "./SessionFilters"
 import SessionLists from "./SessionLists"
-import SessionPagination from "./SessionPagination"
 import useSessionFilter from "@/hooks/useSessionFilter"
 import { useState } from "react"
 import { FilterType } from "@/types/session"
@@ -25,7 +24,6 @@ const SessionHistories = ({ accessToken }: SessionHistoriesProps) => {
             <SessionLists
                 sessions={filterSessions}
             />
-            <SessionPagination />
         </div>
     )
 }

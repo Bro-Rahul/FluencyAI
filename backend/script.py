@@ -136,6 +136,9 @@ def get_heatmap():
     result = db.exec(stmt).mappings().all()
     return result
 
-result = get_heatmap()
+""" result = get_heatmap()
 for item in result:
-    print(item)
+    print(item) """
+
+
+

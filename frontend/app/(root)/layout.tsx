@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/utils/Header";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/context/AuthProvider";
+import "github-markdown-css/github-markdown-dark.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

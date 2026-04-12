@@ -8,7 +8,8 @@ import Transcription from '@/components/reports/Transcription';
 import { getSessionReport } from '@/https/sessions/sessionReports';
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface ReportPageProps {
     params: Promise<{
@@ -19,6 +20,7 @@ const ReportPage = async ({ params }: ReportPageProps) => {
     const { id } = await params
     const session = await getServerSession(options);
     const response = await getSessionReport(session?.user.access_token!, id)
+    console.log(response)
 
     return (
         <section className="container mx-auto px-45 py-6 sm:px-0 md:px-20 min-[100px]:px-0">
@@ -61,6 +63,16 @@ const ReportPage = async ({ params }: ReportPageProps) => {
                         audioFileName={response.audio_file}
                         duration={response.duration}
                     />
+                </TabsContent>
+                <TabsContent value="suggesions">
+                    <div
+                        className="markdown-body"
+
+                    >
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {response.report.comprehensive_report_md}
+                        </ReactMarkdown>
+                    </div>
                 </TabsContent>
             </Tabs>
         </section>

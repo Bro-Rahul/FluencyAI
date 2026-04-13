@@ -5,7 +5,8 @@ from api.routes import (
     session_records_routes,
     user_routes,
     auth_routes,
-    session_reports_routes
+    session_reports_routes,
+    pronunciation_routes,
 )
 from api.config import settings
 import uvicorn
@@ -34,6 +35,7 @@ app.include_router(user_routes.router,prefix=f"{PREFIX}",tags=["Users"])
 app.include_router(auth_routes.router,prefix=f"{PREFIX}",tags=["Auth"])
 app.include_router(session_records_routes.router,prefix=f"{PREFIX}",tags=["Session Records"])
 app.include_router(session_reports_routes.router,prefix=f"{PREFIX}",tags=["Session Reports"])
+app.include_router(pronunciation_routes.router,prefix=f"{PREFIX}",tags=["Pronunciation"])
 
 @app.get("/")
 def read_root():

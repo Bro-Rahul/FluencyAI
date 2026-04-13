@@ -1,23 +1,32 @@
 import { NextResponse } from "next/server";
-import { calculateSimilarity } from "@/lib/pronunciation";
 
 export async function POST(req: Request) {
     const { expected, spoken } = await req.json();
+    const baseURL = process.env.NEXT_PUBLIC_BASEURL;
 
-    const score = calculateSimilarity(
-        expected.toLowerCase(),
-        spoken.toLowerCase()
-    );
-
-    let message = "";
-
-    if (score > 0.9) {
-        message = "Perfect Pronunciation!";
-    } else if (score > 0.75) {
-        message = " Almost Correct!";
-    } else {
-        message = "Try Again!";
+    if (!baseURL) {
+        return NextResponse.json(
+            { detail: "NEXT_PUBLIC_BASEURL is not configured." },
+            { status: 500 }
+        );
     }
 
-    return NextResponse.json({ score, message });
+    const response = await fetch(`${baseURL}/pronunciation/evaluate/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ expected, spoken }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        return NextResponse.json(
+            { detail: data.detail ?? "Unable to evaluate pronunciation." },
+            { status: response.status }
+        );
+    }
+
+    return NextResponse.json(data);
 }

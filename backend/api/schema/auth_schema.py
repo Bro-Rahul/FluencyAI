@@ -6,5 +6,11 @@ class LoginSchema(BaseModel):
     username : str
     password : str
 
+class SocialLoginSchema(BaseModel):
+    email: str
+    username: str
+    avatar: str | None = None
+    provider: str
+
 class AuthenticatedUsersSchema(UserResponseSchema):
     access_token : str

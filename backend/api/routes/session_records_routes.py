@@ -27,11 +27,11 @@ async def list_sessions_sse(
     token = request.query_params.get("token")
     user = authenticated_user_token(token,db)
     async def generator():
-        results = list_sessions(db)
+        results = list_sessions(db, user.id)
         while True:
             yield f"data: {json.dumps(jsonable_encoder(results))}\n\n"
             pending = [item.id for item in results if item.status == "pending"]
-            results = list_pending_sessions(db, pending)
+            results = list_pending_sessions(db, pending, user.id)
             if not results:
                 yield "event: close\ndata: done\n\n"
                 return 

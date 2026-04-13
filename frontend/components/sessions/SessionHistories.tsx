@@ -12,7 +12,7 @@ interface SessionHistoriesProps {
     accessToken: string
 }
 const SessionHistories = ({ accessToken }: SessionHistoriesProps) => {
-    const { sessionsData } = useServerSideEvent(accessToken);
+    const { sessionsData, isLoading } = useServerSideEvent(accessToken);
     const [filterBy, setFilterBy] = useState<FilterType>("Newest");
     const { filterSessions } = useSessionFilter(sessionsData, filterBy);
     return (
@@ -23,6 +23,7 @@ const SessionHistories = ({ accessToken }: SessionHistoriesProps) => {
             />
             <SessionLists
                 sessions={filterSessions}
+                isLoading={isLoading}
             />
         </div>
     )

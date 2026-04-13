@@ -6,6 +6,7 @@ from fastapi import Depends
 from sqlmodel import desc,asc
 from pydantic import BaseModel
 from enum import Enum
+from api.auth import authenticated_user
 
 
 class SortField(str, Enum):
@@ -24,6 +25,7 @@ router = APIRouter(prefix="/filter")
 def get_filter_values(
     sort_by: SortField = SortField.score,
     order: SortOrder = SortOrder.desc,
+    user = Depends(authenticated_user),
     db: Session = Depends(get_db),
 ):
     column_map = {
@@ -36,6 +38,7 @@ def get_filter_values(
     query = (
         select(SessionRecords,SessionReports.report)
         .join(SessionReports)
+        .where(SessionRecords.user_id == user.id)
         .order_by(
             column.asc() if order == SortOrder.asc else column.desc()
         )

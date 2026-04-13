@@ -3,8 +3,7 @@ from api.db.models import SessionRecords,SessionReports
 from api.schema.session_record_schema import SessionRecordSchema
 
 
-
-def list_sessions(db:Session):
+def list_sessions(db:Session, user_id:int):
     statement = (
         select(
             SessionRecords.status,
@@ -17,6 +16,7 @@ def list_sessions(db:Session):
             SessionReports.report["score"].astext.label("score"),
             SessionReports.report["description"].astext.label("description"),
         )
+        .where(SessionRecords.user_id == user_id)
         .order_by(SessionReports.created_at.desc())
         .join(SessionReports)
     )
@@ -24,7 +24,7 @@ def list_sessions(db:Session):
     return rows
    
 
-def list_pending_sessions(db:Session,pending_list:list[int]):
+def list_pending_sessions(db:Session, pending_list:list[int], user_id:int):
     statement = (
         select(
             SessionRecords.status,
@@ -39,7 +39,8 @@ def list_pending_sessions(db:Session,pending_list:list[int]):
         )
         .order_by(SessionReports.created_at.desc())
         .where(
-            SessionRecords.id.in_(pending_list)
+            SessionRecords.id.in_(pending_list),
+            SessionRecords.user_id == user_id,
         )
         .join(SessionReports)
     )
@@ -60,6 +61,7 @@ def get_user_statistics(db:Session,user_id:int):
                     )
                 ).label("avg")
             )
+            .where(SessionRecords.user_id == user_id)
             .join(SessionReports, SessionRecords.report)
             .group_by(SessionRecords.user_id)
         ).mappings().first()
@@ -68,6 +70,7 @@ def get_user_statistics(db:Session,user_id:int):
         select(
             cast(SessionRecords.created_at, Date).label("days")
         )
+        .where(SessionRecords.user_id == user_id)
         .distinct()
         .cte("unique_dates")
     )
@@ -103,6 +106,8 @@ def get_user_statistics(db:Session,user_id:int):
 
     final_stmt = select(func.max(streak_counts.c.data))
     streak = db.exec(final_stmt).first()
-    results = dict(results)
-    results["streak"] = streak
+    results = dict(results or {"total": 0, "avg": 0})
+    results["total"] = int(results.get("total") or 0)
+    results["avg"] = float(results.get("avg") or 0)
+    results["streak"] = int(streak or 0)
     return results

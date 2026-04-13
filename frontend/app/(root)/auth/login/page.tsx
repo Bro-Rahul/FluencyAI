@@ -7,6 +7,7 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { LoginUserType } from "@/types/users"
 import { login } from "@/https/users/users"
+import { signIn } from "next-auth/react"
 
 
 const page = () => {
@@ -41,6 +42,19 @@ const page = () => {
         }
     }
 
+    const handleSocialLogin = async (provider: "google" | "github") => {
+        const result = await signIn(provider, {
+            callbackUrl: "/",
+        })
+
+        if (result?.error) {
+            toast.error(result.error, {
+                duration: 5000,
+                position: "bottom-right",
+            })
+        }
+    }
+
 
 
     return (
@@ -54,14 +68,16 @@ const page = () => {
                     <h1 className="text-3xl font-bold text-white text-center mb-8 drop-shadow-lg">LogIn an account</h1>
                     <div className="space-y-3 mb-8">
                         <button
+                            onClick={() => handleSocialLogin("google")}
                             className="group flex items-center justify-center w-full h-12 px-4 bg-[#232f48] hover:bg-[#2c3b59] border border-[#324467] rounded-lg transition-all duration-200 ease-in-out font-medium text-sm text-white shadow-sm hover:shadow-md hover:border-[#4a5f8a]">
                             <Image src={svg.googleSVG} alt="google icons" className="mr-2" />
-                            Sign up with Google
+                            Sign in with Google
                         </button>
                         <button
+                            onClick={() => handleSocialLogin("github")}
                             className="group flex items-center justify-center w-full h-12 px-4 bg-[#232f48] hover:bg-[#2c3b59] border border-[#324467] rounded-lg transition-all duration-200 ease-in-out font-medium text-sm text-white shadow-sm hover:shadow-md hover:border-[#4a5f8a]">
                             <Image src={svg.githubSVG} alt="github icons" className="mr-2" />
-                            Sign up with GitHub
+                            Sign in with GitHub
                         </button>
                     </div>
 

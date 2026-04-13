@@ -59,7 +59,7 @@ const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
-                <div className="bg-[#1c1f27] rounded-xl border border-[#282e39] overflow-hidden flex h-[30rem] flex-col">
+                <div className="bg-[#1c1f27] rounded-xl border border-[#282e39] overflow-hidden flex h-120 flex-col">
                     <div
                         className="p-4 border-b border-[#282e39] flex justify-between items-center bg-[#222731]">
                         <h3 className="text-base font-bold text-white flex items-center gap-2">

@@ -20,7 +20,6 @@ const ReportPage = async ({ params }: ReportPageProps) => {
     const { id } = await params
     const session = await getServerSession(options);
     const response = await getSessionReport(session?.user.access_token!, id)
-    console.log(response)
 
     return (
         <section className="container mx-auto px-45 py-6 sm:px-0 md:px-20 min-[100px]:px-0">
@@ -65,10 +64,7 @@ const ReportPage = async ({ params }: ReportPageProps) => {
                     />
                 </TabsContent>
                 <TabsContent value="suggesions">
-                    <div
-                        className="markdown-body"
-
-                    >
+                    <div className="markdown-body rounded-3xl border border-[#282e39] bg-[#151922] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.28)] sm:p-7">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {response.report.comprehensive_report_md}
                         </ReactMarkdown>

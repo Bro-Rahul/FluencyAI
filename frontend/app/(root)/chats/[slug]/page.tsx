@@ -2,47 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import icons from "@/constants/icons";
+import useAudioVideoPermission from "@/hooks/useAudioVideoPermission";
+import useChats from "@/hooks/useChats";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 
 const page = () => {
-    const videoRef = useRef<HTMLVideoElement | null>(null);
-    const streamRef = useRef<MediaStream | null>(null);
+    const { slug } = useParams<{ slug: string }>()
+    const { videoRef, toggleCamera, toggleMic } = useAudioVideoPermission();
+    const { isReady, socketRef } = useChats(slug);
+
     useEffect(() => {
-        const init = async () => {
-            try {
-                const media = await navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: true,
-                });
+        if (!isReady) return;
+        socketRef.current?.send(JSON.stringify({
+            event: "find",
+            data: {}
+        }));
+    }, [isReady]);
 
-                streamRef.current = media;
-
-                if (videoRef.current) {
-                    videoRef.current.srcObject = media;
-                }
-            } catch (err) {
-                console.log("can't get the access");
-            }
-        };
-
-        init();
-    }, []);
-
-    const toggleCamera = () => {
-        if (!streamRef.current) return;
-
-        const videoTrack = streamRef.current.getVideoTracks()[0];
-        videoTrack.enabled = !videoTrack.enabled;
-    };
-
-    const toggleMic = () => {
-        if (!streamRef.current) return;
-
-        const audioTrack = streamRef.current.getAudioTracks()[0];
-        audioTrack.enabled = !audioTrack.enabled;
-    };
 
     return (
         <div className="flex flex-col h-screen overflow-hidden bg-[#080b11] text-white font-sans">

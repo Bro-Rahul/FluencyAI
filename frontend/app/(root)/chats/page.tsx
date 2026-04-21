@@ -1,33 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import useAudioVideoPermission from "@/hooks/useAudioVideoPermission";
+
 
 const Page = () => {
-    const [hasPermission, setHasPermission] = useState(false);
     const router = useRouter();
+    const { hasPermission } = useAudioVideoPermission(true);
 
-    useEffect(() => {
-        const init = async () => {
-            try {
-                const media = await navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: true,
-                });
-
-                media.getTracks().forEach(track => track.stop())
-                setHasPermission(true);
-            } catch (err) {
-                console.log("can't get the access");
-            }
-        };
-
-        init();
-    }, []);
-
-    // ✅ generate UUID only on click
     const handleRandomChat = () => {
 
         if (hasPermission) {
@@ -62,7 +44,7 @@ const Page = () => {
 
                         <Button
                             onClick={handleRandomChat}
-                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white"
                         >
                             Begin AI Session
                         </Button>
@@ -77,7 +59,7 @@ const Page = () => {
 
                         <Button
                             onClick={handleRandomChat}
-                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white"
                         >
                             Find Partner Match
                         </Button>

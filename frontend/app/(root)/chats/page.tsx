@@ -1,0 +1,91 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+const Page = () => {
+    const [hasPermission, setHasPermission] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const init = async () => {
+            try {
+                const media = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: true,
+                });
+
+                media.getTracks().forEach(track => track.stop())
+                setHasPermission(true);
+            } catch (err) {
+                console.log("can't get the access");
+            }
+        };
+
+        init();
+    }, []);
+
+    // ✅ generate UUID only on click
+    const handleRandomChat = () => {
+
+        if (hasPermission) {
+            const id = crypto.randomUUID();
+            router.push(`/chats/${id}`);
+            return
+        }
+
+        toast.error("Can't start the Video Call chat Camera and Mic permissions are not provided", {
+            position: "bottom-right",
+            duration: 5000
+        })
+    };
+
+    return (
+        <div className="bg-[#1c1f27] text-white min-h-screen font-sans">
+            <main className="max-w-6xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold">Choose Your Journey</h1>
+                    <p className="text-gray-400 mt-2">
+                        Practice solo or connect with learners worldwide.
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    {/* AI Practice */}
+                    <div className="bg-[#101622] p-6 rounded-xl border border-gray-700 shadow-lg">
+                        <h2 className="text-2xl font-bold mb-3">AI Practice</h2>
+                        <p className="text-gray-400 mb-6">
+                            Practice without pressure. Get real-time corrections and feedback.
+                        </p>
+
+                        <Button
+                            onClick={handleRandomChat}
+                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
+                        >
+                            Begin AI Session
+                        </Button>
+                    </div>
+
+                    {/* Global Match */}
+                    <div className="bg-[#101622] p-6 rounded-xl border border-gray-700 shadow-lg">
+                        <h2 className="text-2xl font-bold mb-3">Global Match</h2>
+                        <p className="text-gray-400 mb-6">
+                            Talk with real people and improve through conversations.
+                        </p>
+
+                        <Button
+                            onClick={handleRandomChat}
+                            className="w-full py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
+                        >
+                            Find Partner Match
+                        </Button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
+};
+
+export default Page;

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import TimeLine from "./TimeLine";
 import Player from "./Player";
+import Image from "next/image";
+import images from "@/constants/images";
 
 interface AudioPlayerProps {
     audioURL: string | null,
@@ -27,10 +29,13 @@ const AudioPlayer = ({ audioURL, fileName, duration, handleDuration }: AudioPlay
 
             <div className="flex justify-center">
                 <div className="rounded-xl overflow-hidden shadow-xl bg-white p-3 mb-6">
-                    <img
-                        src="https://images.unsplash.com/photo-1616627986691-4d193584af52?q=80&w=500"
+                    <Image
+                        src={images.practiceImage}
                         alt="practice session"
                         className="rounded-lg w-48 h-48 object-cover"
+                        width={100}
+                        height={100}
+                        priority
                     />
                 </div>
             </div>

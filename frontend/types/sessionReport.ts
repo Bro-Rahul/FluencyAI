@@ -49,6 +49,8 @@ export interface SessionReport {
     grammar_corrections: GrammarCorrection[];
 
     vocabulary_enhancements: VocabularyEnhancement[];
+
+    comprehensive_report_md: string
 }
 
 

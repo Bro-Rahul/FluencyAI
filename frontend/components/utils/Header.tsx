@@ -27,9 +27,11 @@ const Header = async () => {
                             Sessions
                         </Button>
                     </Link>
-                    <Button variant="link" className="font-semibold">
-                        Lessons
-                    </Button>
+                    <Link href={'/chats'}>
+                        <Button variant="link" className="font-semibold">
+                            Chats
+                        </Button>
+                    </Link>
 
                     <SignIn />
                 </nav>

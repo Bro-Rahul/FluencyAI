@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next"
 import { options } from "../api/auth/[...nextauth]/options";
 import Header from "@/components/utils/Header";
+import Link from "next/link";
 
 const Page = async () => {
   const session = await getServerSession(options)
@@ -113,9 +114,11 @@ const Page = async () => {
                   understood.
                 </p>
               </div>
-              <button className="mt-4 md:mt-0 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600">
-                Start Practice
-              </button>
+              <Link href={'/pronunciation'}>
+                <button className="mt-4 md:mt-0 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600">
+                  Start Practice
+                </button>
+              </Link>
             </div>
 
             {/* Tip 2 */}

@@ -2,8 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 
+type SpeechRecognitionConstructor = new () => SpeechRecognition;
+
+declare global {
+    interface Window {
+        SpeechRecognition?: SpeechRecognitionConstructor;
+        webkitSpeechRecognition?: SpeechRecognitionConstructor;
+    }
+}
+
 export default function PronunciationClient() {
-    const [word] = useState("Entrepreneur");
+    const [word, setWord] = useState("Entrepreneur");
     const [result, setResult] = useState<string | null>(null);
     const [feedback, setFeedback] = useState<string | null>(null);
     const [score, setScore] = useState<number | null>(null);
@@ -11,8 +20,9 @@ export default function PronunciationClient() {
     const [spokenText, setSpokenText] = useState<string | null>(null);
     const [voicesLoaded, setVoicesLoaded] = useState(false);
     const [speechError, setSpeechError] = useState<string | null>(null);
-    const recognitionRef = useRef<any>(null);
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
     const selectedVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
+    const normalizedWord = word.trim();
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -41,6 +51,10 @@ export default function PronunciationClient() {
 
     const speakWord = () => {
         if (typeof window === "undefined") return;
+        if (!normalizedWord) {
+            setSpeechError("Type a word first so I can pronounce it.");
+            return;
+        }
 
         const synth = window.speechSynthesis;
 
@@ -53,7 +67,7 @@ export default function PronunciationClient() {
         synth.cancel();
         synth.resume();
 
-        const utterance = new SpeechSynthesisUtterance(word);
+        const utterance = new SpeechSynthesisUtterance(normalizedWord);
         utterance.lang = "en-US";
         utterance.rate = 0.9;
         utterance.pitch = 1;
@@ -91,10 +105,14 @@ export default function PronunciationClient() {
 
     const startListening = () => {
         if (typeof window === "undefined") return;
+        if (!normalizedWord) {
+            setSpeechError("Enter a word before starting pronunciation practice.");
+            return;
+        }
 
         const SpeechRecognition =
-            (window as any).SpeechRecognition ||
-            (window as any).webkitSpeechRecognition;
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
 
         if (!SpeechRecognition) {
             setSpeechError("Speech recognition is not supported in this browser. Try Google Chrome.");
@@ -114,7 +132,7 @@ export default function PronunciationClient() {
         recognition.maxAlternatives = 1;
         recognition.continuous = false;
 
-        recognition.onresult = async (event: any) => {
+        recognition.onresult = async (event: SpeechRecognitionEvent) => {
             const spokenWord = event.results[0][0].transcript;
             setSpokenText(spokenWord);
 
@@ -125,7 +143,7 @@ export default function PronunciationClient() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        expected: word,
+                        expected: normalizedWord,
                         spoken: spokenWord,
                     }),
                 });
@@ -143,7 +161,7 @@ export default function PronunciationClient() {
             }
         };
 
-        recognition.onerror = (event: any) => {
+        recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
             setListening(false);
             setResult("Speech recognition failed.");
             setFeedback(null);
@@ -157,18 +175,43 @@ export default function PronunciationClient() {
         try {
             setListening(true);
             recognition.start();
-        } catch (error) {
+        } catch {
             setListening(false);
             setSpeechError("Unable to start speech recognition. Try refreshing the page and allowing mic access.");
         }
     };
 
+    const handleWordChange = (value: string) => {
+        setWord(value);
+        setResult(null);
+        setFeedback(null);
+        setScore(null);
+        setSpokenText(null);
+        setSpeechError(null);
+    };
+
     return (
         <div className="w-full max-w-md bg-white dark:bg-zinc-900 shadow-xl rounded-2xl p-8 border border-gray-200 dark:border-zinc-700 transition-all">
+            <div className="mb-6 space-y-2">
+                <label
+                    htmlFor="pronunciation-word"
+                    className="block text-sm font-medium text-gray-600 dark:text-gray-300"
+                >
+                    Practice Word
+                </label>
+                <input
+                    id="pronunciation-word"
+                    type="text"
+                    value={word}
+                    onChange={(event) => handleWordChange(event.target.value)}
+                    placeholder="Type a word to practice"
+                    className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white dark:focus:ring-blue-900"
+                />
+            </div>
 
             {/* Word Display */}
             <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-2">
-                {word}
+                {normalizedWord || "Type a word"}
             </h2>
 
             <p className="text-center text-gray-500 text-sm mb-6">
@@ -183,7 +226,7 @@ export default function PronunciationClient() {
             <div className="flex justify-center gap-4 mb-6">
                 <button
                     onClick={speakWord}
-                    disabled={!voicesLoaded}
+                    disabled={!voicesLoaded || !normalizedWord}
                     className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-medium transition-all active:scale-95"
                 >
                     {voicesLoaded ? "🔊 Hear" : "Loading voice..."}
@@ -191,7 +234,7 @@ export default function PronunciationClient() {
 
                 <button
                     onClick={startListening}
-                    disabled={listening}
+                    disabled={listening || !normalizedWord}
                     className={`px-5 py-2 rounded-xl font-medium transition-all active:scale-95 ${listening
                         ? "bg-red-500 animate-pulse text-white"
                         : "bg-green-600 hover:bg-green-700 text-white"
@@ -203,7 +246,7 @@ export default function PronunciationClient() {
 
             {spokenText && (
                 <p className="text-center text-sm text-gray-400 mb-3">
-                    You said: "{spokenText}"
+                    You said: &quot;{spokenText}&quot;
                 </p>
             )}
 

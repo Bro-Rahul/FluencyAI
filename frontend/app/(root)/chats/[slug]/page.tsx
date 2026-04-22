@@ -3,24 +3,15 @@
 import { Button } from "@/components/ui/button";
 import icons from "@/constants/icons";
 import useAudioVideoPermission from "@/hooks/useAudioVideoPermission";
-import useChats from "@/hooks/useChats";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useRef } from "react";
 
 
 const page = () => {
     const { slug } = useParams<{ slug: string }>()
     const { videoRef, toggleCamera, toggleMic } = useAudioVideoPermission();
-    const { isReady, socketRef } = useChats(slug);
-
-    useEffect(() => {
-        if (!isReady) return;
-        socketRef.current?.send(JSON.stringify({
-            event: "find",
-            data: {}
-        }));
-    }, [isReady]);
+    const peerRef = useRef<HTMLVideoElement | null>(null);
 
 
     return (
@@ -73,6 +64,20 @@ const page = () => {
                     <div className="absolute bottom-10 right-6 w-40 h-56 rounded-xl overflow-hidden border border-white/10">
                         <video
                             ref={videoRef}
+                            autoPlay
+                            muted
+                            playsInline
+                            className="w-full h-full object-cover"
+                        ></video>
+
+                        <div className="absolute bottom-2 left-2 bg-black/60 px-2 py-0.5 text-[10px] rounded">
+                            You
+                        </div>
+                    </div>
+
+                    <div className="absolute bottom-10 left-6 w-40 h-56 rounded-xl overflow-hidden border border-white/10">
+                        <video
+                            ref={peerRef}
                             autoPlay
                             muted
                             playsInline

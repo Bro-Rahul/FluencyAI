@@ -47,21 +47,21 @@ async def find_event(ws:WebRTCPayload,data:Dict):
     client_id = data.get("id")
 
     if socket_events.waiting_queue:
-        peer_id = socket_events.waiting_queue.pop()
+        peer_id = socket_events.waiting_queue[-1]
         peer_socket = socket_events.peer_map.get(peer_id)
         await socket_events.send_json(peer_socket,{
-            "event": "match",
+            "event": "Match",
             "data" : {
-                "peer" : client_id,
-                "role" : "receiver"
+                "target" : client_id,
+                "role" : "Receiver"
             }
         })
 
         await socket_events.send_json(ws,{
-            "event": "match",
+            "event": "Match",
             "data" : {
-                "peer" : peer_id,
-                "role": "caller"
+                "target" : peer_id,
+                "role": "Caller"
             }
         })
     else:
@@ -74,22 +74,26 @@ async def find_event(ws:WebRTCPayload,data:Dict):
         
 
 
-@socket_events.on("offer")
+@socket_events.on("Offer")
 async def offer_event(ws:WebSocket,data:Dict):
+    print("Offer invoke ")
+    print(data)
     target_peer = data.get("target")
     target_socket = socket_events.peer_map.get(target_peer)
     await socket_events.send_json(target_socket,data)
 
 
-@socket_events.on("answer")
+@socket_events.on("Answer")
 async def answer_event(ws:WebSocket,data:Dict):
+    print("Answer invoke ")
     target_peer = data.get("target")
     target_socket = socket_events.peer_map.get(target_peer)
     await socket_events.send_json(target_socket,data)
     
 
-@socket_events.on("ice")
+@socket_events.on("Ice")
 async def ice_events(ws:WebSocket,data:Dict):
+    print("Ice invoke ")
     target_peer = data.get("target")
     target_socket = socket_events.peer_map.get(target_peer)
     await socket_events.send_json(target_socket,data)

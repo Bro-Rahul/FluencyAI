@@ -17,6 +17,7 @@ async def pair_peoples(ws:WebSocket,client_id:str):
     try:
         while True:
             payload = await ws.receive_json()
+            payload['data']['id'] = client_id
             await socket_events.handle(ws,payload)
         
     except WebSocketDisconnect:

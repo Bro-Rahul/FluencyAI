@@ -1,6 +1,7 @@
 import json
 from typing import Dict,Any
 
+
 schema = {
   "score": 0,
   "ielts_band": 0.0,
@@ -33,71 +34,36 @@ schema = {
       "original_word": "",
       "enhanced_word": ""
     }
-  ]
+  ],
+  "comprehensive_report_md": "# Overall Report\n... (detailed analysis string) ..."
 }
 
+def get_prompt(data: Dict[str, Any]):
+  prompt = f"""
+  You are a professional English speech coach and linguist.
+  
+  Analyze the provided speech transcript and return a detailed evaluation.
+  
+  TASKS:
+  1. Fill out all technical fields in the schema (scores, metrics, corrections).
+  2. Generate a `comprehensive_report_md`. This should be a full-length, formatted Markdown string that summarizes:
+    - Overall performance & "vibe."
+    - Overall score: 1–10
+    - Key metrics: 0–100 percentages
+    - CEFR Level: A1–C2
+    - Strengths and specific weaknesses.
+    - A combined table of grammar and vocabulary improvements.
+    - A final "Path to Success" coaching paragraph.
 
-def get_prompt(data:Dict[str,Any]):
+  OUTPUT RULES (STRICT):
+  - Return ONLY valid JSON.
+  - No markdown blocks outside the JSON.
+  - The `comprehensive_report_md` field must contain the entire formatted report as a single string.
+  - Follow this schema exactly:
+  
+  {json.dumps(schema, indent=2)}
 
-  promp = f"""
-  You are a professional English speech coach, linguist, and assessment evaluator.
-
-  You will receive a speech transcript provided as a list of audio chunks.
-  These chunks may contain partial sentences, repetition, or disfluencies.
-
-  Your Tasks
-
-  Reconstruct the speaker’s intended speech.
-
-  Analyze spoken English quality objectively.
-
-  Produce a detailed evaluation report following the exact JSON schema below.
-
-  Evaluation Dimensions
-
-  Analyze and score the speech for:
-
-  Grammar accuracy
-
-  Fluency
-
-  Pacing (speech rate & pause control)
-
-  Confidence (assertiveness & clarity)
-
-  Vocabulary quality
-
-  Use spoken English standards (not written English).
-  Assume the speaker may be a non-native English speaker.
-
-  Scoring Rules
-
-  Overall score: 1–10
-
-  Key metrics: 0–100 percentages
-
-  IELTS Band: 0–9
-
-  CEFR Level: A1–C2
-
-  Pace measured in Words Per Minute (WPM)
-
-  Duration formatted as HH:MM:SS
-
-  Output Rules (STRICT)
-
-  Return ONLY valid JSON
-
-  No markdown, no comments, no explanations
-
-  Follow the schema exactly
-
-  Use actual user-spoken sentences where required
-  REQUIRED JSON OUTPUT
-  {json.dumps(schema)}
-
-  Speech Transcript (Audio Chunks)
+  Speech Transcript (Audio Chunks):
   {data}
   """
-
-  return promp
+  return prompt

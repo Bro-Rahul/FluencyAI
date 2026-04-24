@@ -15,6 +15,7 @@ const SessionHistories = ({ accessToken }: SessionHistoriesProps) => {
     const { sessionsData, isLoading } = useServerSideEvent(accessToken);
     const [filterBy, setFilterBy] = useState<FilterType>("Newest");
     const { filterSessions } = useSessionFilter(sessionsData, filterBy);
+    console.log(sessionsData)
     return (
         <div className="flex flex-col w-full">
             <SessionFilters

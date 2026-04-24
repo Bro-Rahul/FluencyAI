@@ -15,6 +15,14 @@ const useServerSideEvent = (accessToken: string) => {
         const event = new EventSource(`${baseURL}/sessions/?token=${accessToken}`)
         event.onmessage = (e) => {
             setSessions(JSON.parse(e.data))
+            // console.log(JSON.parse(e.data))
+            setSessions(pre => {
+                const response: SessionRecordsType[] = JSON.parse(e.data);
+                const updatedRecords = pre.map(item => item.id !== response[0].id ? item : {
+                    ...response[0]
+                });
+                return updatedRecords
+            })
             setIsLoading(false)
         }
 

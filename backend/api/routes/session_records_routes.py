@@ -31,8 +31,7 @@ async def list_sessions_sse(
         results = list_sessions(db, user.id)
         while True:
             yield f"data: {json.dumps(jsonable_encoder(results))}\n\n"
-            pending = [item.id for item in results if item.status == "pending"]
-            results = list_pending_sessions(db, pending, user.id)
+            results = list_sessions(db,user.id)
             if not results:
                 yield "event: close\ndata: done\n\n"
                 return 

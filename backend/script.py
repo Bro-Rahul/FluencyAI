@@ -188,6 +188,9 @@ def get_prompt(data: Dict[str, Any]):
     1. Fill out all technical fields in the schema (scores, metrics, corrections).
     2. Generate a `comprehensive_report_md`. This should be a full-length, formatted Markdown string that summarizes:
        - Overall performance & "vibe."
+       - Overall score: 1–10
+       - Key metrics: 0–100 percentages
+       - CEFR Level: A1–C2
        - Strengths and specific weaknesses.
        - A combined table of grammar and vocabulary improvements.
        - A final "Path to Success" coaching paragraph.
@@ -206,9 +209,9 @@ def get_prompt(data: Dict[str, Any]):
     return prompt
 
 
-def report_generate():
+def report_generate(id:int):
     
-    report = db.exec(select(SessionReports).where(SessionReports.session_id == 19)).first()
+    report = db.exec(select(SessionReports).where(SessionReports.session_id == id)).first()
     print(report.transcriptions)
     print("hi")
 

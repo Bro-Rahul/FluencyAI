@@ -7,7 +7,6 @@ from .get import get_user_by_email
 
 def create_user(user_data:UserCreateSchema,db:Session):
     hash_password = get_password_hash(user_data.password)
-    print(hash_password)
     new_users = user_data.model_dump(exclude="password")
     user_exists = get_user_by_email(user_data.email,db)
     if user_exists:

@@ -10,7 +10,7 @@ import { login } from "@/https/users/users"
 import { signIn } from "next-auth/react"
 
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [credencials, setCredencials] = useState<LoginUserType>({
         password: "",
@@ -107,6 +107,14 @@ const page = () => {
                                 }))}
                             />
                         </div>
+                        <div className="text-right">
+                            <Link
+                                className="text-sm font-medium text-[#92a4c9] transition-colors hover:text-white"
+                                href="/auth/forgot-password"
+                            >
+                                Forgot password?
+                            </Link>
+                        </div>
                         <button
                             className="w-full h-12 bg-[#135bec] hover:bg-[#1149bc] text-white text-sm font-bold rounded-lg shadow-lg hover:shadow-blue-500/20 transition-all duration-200 mt-2 cursor-pointer"
                             onClick={handleSubmit}
@@ -115,7 +123,7 @@ const page = () => {
                         </button>
                     </div>
                     <div className="mt-8 text-center text-sm text-[#92a4c9]">
-                        Don't have an account?
+                        Don&apos;t have an account?
                         <Link className="text-[#135bec] hover:text-white font-semibold transition-colors ml-1" href="/auth/register">Sign
                             Up</Link>
                     </div>
@@ -125,4 +133,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

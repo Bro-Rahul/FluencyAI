@@ -15,6 +15,8 @@ class Users(SQLModel, table=True):
     score: Annotated[int, Field(default=0)]
 
     avatar: Annotated[Optional[str], Field(nullable=True)]
+    reset_otp_hash: Annotated[Optional[str], Field(nullable=True)]
+    reset_otp_expires_at: Annotated[Optional[datetime], Field(nullable=True)]
 
     created_at: Annotated[
         datetime,

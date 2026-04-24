@@ -6,14 +6,18 @@ import { KeyMetric } from "@/types/sessionReport";
 interface SpeechScoreMatrixProps {
     score: number,
     description: string,
+    cefrLevel: string,
     performanceMetrix: KeyMetric
 }
 
-const SpeechScoreMatrix = ({ score, description, performanceMetrix }: SpeechScoreMatrixProps) => {
+const SpeechScoreMatrix = ({ score, cefrLevel, description, performanceMetrix }: SpeechScoreMatrixProps) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
             <div className="bg-[#1c1f27] rounded-xl p-6 border-t-2 border-2 border-t-[#135bec] border-[#282e39] flex flex-col items-center gap-6 relative">
                 <h3 className="text-white font-bold text-lg self-center">Overall Score</h3>
+                <p className="text-gray-400 text-sm">
+                    CEFR Level <span className="text-white font-semibold">{cefrLevel}</span>
+                </p>
                 <ScoreBoard value={score} />
                 <p className="text-[#d1d5db] text-sm text-center line-clamp-2">
                     {description}

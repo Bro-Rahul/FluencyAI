@@ -30,9 +30,6 @@ const SessionCard = ({ session }: SessionCardProps) => {
                             <h3
                                 className="text-white font-bold text-lg group-hover:text-[#3b82f6] transition-colors">
                                 {session.title ? session.title : `Practice Session #${session.id}`}</h3>
-                            <span
-                                className="bg-[#282e39] text-[#9da6b9] text-xs px-2 py-0.5 rounded border border-[#3b4354]">Photography
-                            </span>
                         </div>
                         {session.status === "pending" ?
                             <Skeleton className='w-full h-5 bg-[#2f3544]' /> :

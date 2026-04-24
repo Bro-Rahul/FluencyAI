@@ -47,6 +47,7 @@ const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
     return (
         <div className='flex flex-col gap-5'>
             <SpeechScoreMatrix
+                cefrLevel={report.cefr_level}
                 score={report.score * 10}
                 description={report.description}
                 performanceMetrix={report.key_metrics}

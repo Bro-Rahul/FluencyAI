@@ -1,9 +1,16 @@
 "use client";
 
 import Avatar from "@/components/utils/Avarat";
-import icons from "@/constants/icons";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import Vapi from "@vapi-ai/web";
+import {
+    Bot,
+    LoaderCircle,
+    Mic,
+    PhoneOff,
+    Radio,
+    Sparkles,
+} from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -32,12 +39,24 @@ const publicApiKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_API_KEY;
 const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
 const hasVapiConfig = Boolean(publicApiKey && assistantId);
 
+const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+        .toString()
+        .padStart(2, "0");
+    const secs = Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+
+    return `${mins}:${secs}`;
+};
+
 const Page = () => {
     const vapiRef = useRef<Vapi | null>(null);
     const [isRecording, setIsRecording] = useState(false);
     const [transcription, setTranscription] = useState<TranscriptEntry[]>([]);
     const [currentMessage, setCurrentMessage] = useState("");
     const [isConnecting, setIsConnecting] = useState(false);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
     const statusMessage = useMemo(() => {
         if (!hasVapiConfig) {
@@ -45,15 +64,15 @@ const Page = () => {
         }
 
         if (isConnecting) {
-            return "Connecting to Vapi AI agent...";
+            return "Connecting to the AI speaking coach...";
         }
 
-        if (currentMessage) {
-            return currentMessage;
+        if (isRecording) {
+            return "Listening for your response...";
         }
 
-        return isRecording ? "Speak now..." : "Click the mic to start";
-    }, [currentMessage, isConnecting, isRecording]);
+        return "Start the session to begin live conversation practice.";
+    }, [isConnecting, isRecording]);
 
     const appendTranscript = useCallback((role: TranscriptRole, content?: string) => {
         const trimmedContent = content?.trim();
@@ -72,6 +91,18 @@ const Page = () => {
     }, []);
 
     useEffect(() => {
+        if (!isRecording) {
+            return;
+        }
+
+        const timer = window.setInterval(() => {
+            setElapsedSeconds((prev) => prev + 1);
+        }, 1000);
+
+        return () => window.clearInterval(timer);
+    }, [isRecording]);
+
+    useEffect(() => {
         if (!hasVapiConfig) {
             return;
         }
@@ -82,12 +113,14 @@ const Page = () => {
         const handleCallStart = () => {
             setIsConnecting(false);
             setIsRecording(true);
+            setElapsedSeconds(0);
         };
 
         const handleCallEnd = () => {
             setIsConnecting(false);
             setIsRecording(false);
             setCurrentMessage("");
+            setElapsedSeconds(0);
         };
 
         const handleSpeechStart = () => {
@@ -137,6 +170,7 @@ const Page = () => {
             setIsConnecting(false);
             setIsRecording(false);
             setCurrentMessage("");
+            setElapsedSeconds(0);
             toast.error("Unable to start the Vapi AI agent. Check your Vapi config and microphone permission.", {
                 position: "bottom-right",
                 duration: 5000,
@@ -179,6 +213,7 @@ const Page = () => {
             console.error("Unable to start Vapi call", error);
             setIsConnecting(false);
             setIsRecording(false);
+            setElapsedSeconds(0);
             toast.error("Microphone permission is required to talk with the AI coach.", {
                 position: "bottom-right",
                 duration: 5000,
@@ -189,6 +224,7 @@ const Page = () => {
     const stopCall = useCallback(async () => {
         if (!vapiRef.current) {
             setIsRecording(false);
+            setElapsedSeconds(0);
             return;
         }
 
@@ -196,6 +232,7 @@ const Page = () => {
         setIsRecording(false);
         setIsConnecting(false);
         setCurrentMessage("");
+        setElapsedSeconds(0);
     }, []);
 
     const toggleRecording = useCallback(() => {
@@ -208,142 +245,182 @@ const Page = () => {
     }, [isRecording, startCall, stopCall]);
 
     return (
-        <div className="text-on-surface min-h-screen flex flex-col bg-[#101622] font-['Inter']">
-            <main className="flex-1 flex flex-col items-center justify-center px-6 py-8 max-w-4xl mx-auto w-full">
-                <section className="w-full flex flex-col items-center justify-center py-12 relative">
-                    <div className="relative group">
-                        <div className={`absolute inset-0 ${isRecording ? "bg-red-500/20" : "bg-blue-500/20"} rounded-full blur-3xl opacity-40 group-hover:opacity-60`}></div>
+        <main className="relative min-h-[calc(100vh-73px)] overflow-hidden bg-[#070a10] text-white">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.12),transparent_30%),linear-gradient(180deg,#0b1019_0%,#070a10_52%,#06080d_100%)]" />
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] bg-size-[34px_34px]" />
 
-                        <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full bg-[#111318] border border-white/10 flex items-center justify-center overflow-hidden">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="flex items-end gap-1.5 h-16">
-                                    {[8, 12, 16, 10, 14, 12].map((h, i) => (
-                                        <div
-                                            key={i}
-                                            className={`w-1.5 ${isRecording ? "bg-red-500" : "bg-blue-500"} rounded-full ${isRecording ? "animate-pulse" : ""}`}
-                                            style={{ height: `${h * 4}px` }}
-                                        ></div>
-                                    ))}
+            <section className="relative mx-auto flex min-h-[calc(100vh-73px)] w-full max-w-7xl flex-col px-6 py-10 md:px-10 lg:px-12">
+                <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-2">
+                    <div className="rounded-[30px] border border-white/8 bg-[#151922]/92 px-8 py-10 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
+                        <div className="flex h-full flex-col items-center justify-center text-center">
+                            <div className="relative">
+                                <div className="absolute inset-0 rounded-full bg-[#2563eb]/18 blur-2xl" />
+                                <div className="relative flex size-24 items-center justify-center rounded-full border-4 border-[#2563eb] bg-[#0d121b] shadow-[0_0_0_10px_rgba(37,99,235,0.12)]">
+                                    <Bot className="size-12 text-white" />
                                 </div>
+                                <span className={`absolute right-0 bottom-1 size-5 rounded-full border-4 border-[#151922] ${isRecording ? "bg-[#22c55e]" : "bg-[#64748b]"}`} />
                             </div>
-                            <Image
-                                className="w-full h-full object-cover opacity-30 mix-blend-overlay"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqoMccpcSTRFvp0MTLuVnPgJNSRl7GYVswvYqDA_Kil2RmaV7t8tXVNTQcPBNfA6EV9BnWTGNSxf45O-fjyleatne__e6OEPIkYUSdSA1nrA_IUd0l7ooXW1SP6BerjMtD_JfGaWa8oJM-8vVgk_NFkRkpJp5Mvl7YO0jvJQHXd59JC12Kp5Aqz7Q8P8xY3uFXCs8jZmfqORD79x_jcDn-EBhAHXQWNNrM1cVRn36Yex8mzJnsLcqAH4qWjLJJSZdWQClvRsIeLRT1"
-                                alt="AI visual"
-                                width={256}
-                                height={256}
-                            />
+
+                            <h2 className="mt-7 text-3xl font-semibold tracking-tight">AI Coach</h2>
+                            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#7f8ca3]">
+                                {isConnecting ? "Connecting..." : isRecording ? "Listening..." : "Ready"}
+                            </p>
+                            <p className="mt-4 max-w-md text-sm leading-7 text-[#98a4bb]">
+                                {statusMessage}
+                            </p>
                         </div>
                     </div>
 
-                    <div className="mt-8 text-center">
-                        <h2 className="text-xl font-semibold text-white">
-                            {isConnecting ? "Connecting to AI Coach..." : isRecording ? "AI Coach is listening..." : "AI Coach"}
-                        </h2>
-                        <p className="text-gray-400 text-sm mt-1">{statusMessage}</p>
-                    </div>
-                </section>
-
-                <section className="w-full mt-auto mb-8">
-                    <div className="bg-[#1c1f27] rounded-xl border border-white/5 p-6 shadow-2xl h-64 flex flex-col">
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="text-[10px] uppercase text-gray-400">
-                                Live Transcription
-                            </span>
-                            <div className="flex items-center gap-2">
-                                <span className={`w-2 h-2 ${isRecording ? "bg-red-500" : "bg-blue-500"} rounded-full`}></span>
-                                <span className={`text-[10px] uppercase ${isRecording ? "text-red-500" : "text-blue-500"}`}>
-                                    {isConnecting ? "Connecting" : isRecording ? "Recording" : "Ready"}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto space-y-6 pr-2">
-                            {transcription.map((msg, index) => (
-                                <div key={`${msg.timestamp.toISOString()}-${index}`} className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                                        {msg.role === "assistant" ? (
-                                            <Image
-                                                src={icons.robortIcon}
-                                                alt="AI Icon"
-                                                width={20}
-                                                height={20}
-                                                className="text-blue-500"
-                                            />
-                                        ) : (
-                                            <Avatar />
-                                        )}
-                                    </div>
-                                    <div>
-                                        <p className={`text-xs uppercase ${msg.role === "assistant" ? "text-blue-500" : "text-gray-400"}`}>
-                                            {msg.role === "assistant" ? "AI Coach" : "You"}
-                                        </p>
-                                        <p className={`text-sm ${msg.role === "assistant" ? "text-white" : "text-gray-200"}`}>
-                                            {msg.content}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                            {currentMessage && (
-                                <div className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div className="rounded-[30px] border border-white/8 bg-[#151922]/92 px-8 py-10 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
+                        <div className="flex h-full flex-col items-center justify-center text-center">
+                            <div className="relative">
+                                <div className={`absolute inset-0 rounded-full blur-2xl ${currentMessage ? "bg-[#2563eb]/18" : "bg-white/6"}`} />
+                                <div className="relative flex size-24 items-center justify-center rounded-full border-4 border-[#1d4ed8] bg-[#0d121b] shadow-[0_0_0_10px_rgba(29,78,216,0.12)]">
+                                    <div className="rounded-full bg-[#0f1724] p-2">
                                         <Avatar />
                                     </div>
-                                    <div>
-                                        <p className="text-xs text-gray-400 uppercase">You</p>
-                                        <p className="text-sm text-gray-200 italic">
-                                            {currentMessage}
+                                </div>
+                                <span className={`absolute right-0 bottom-1 flex size-5 items-center justify-center rounded-full border-4 border-[#151922] ${currentMessage ? "bg-[#2563eb]" : "bg-[#64748b]"}`}>
+                                    <Mic className="size-2.5 text-white" />
+                                </span>
+                            </div>
+
+                            <h2 className="mt-7 text-3xl font-semibold tracking-tight">You</h2>
+                            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#2f6bff]">
+                                {currentMessage ? "Speaking" : "Waiting"}
+                            </p>
+                            <p className="mt-4 max-w-md text-sm leading-7 text-[#98a4bb]">
+                                {currentMessage ? "Your live speech is being transcribed in real time." : "Your replies will appear here while the coach listens."}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <section className="mt-16 w-full max-w-5xl self-center">
+                    <div className="mb-8 flex items-center justify-between gap-4">
+                        <div>
+                            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7c8aa4]">Live Transcript</p>
+                            <p className="mt-3 text-base text-[#8f9ab0]">Follow the conversation as the session unfolds.</p>
+                        </div>
+
+                        <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] ${isRecording ? "border-red-500/25 bg-red-500/10 text-[#ff6b6b]" : "border-[#1f3b7c] bg-[#0c1527] text-[#7aa2ff]"}`}>
+                            <Radio className="size-4" />
+                            {isRecording ? `Rec ${formatDuration(elapsedSeconds)}` : isConnecting ? "Connecting" : "Ready"}
+                        </div>
+                    </div>
+
+                    <div className="space-y-7">
+                        {transcription.map((msg, index) => {
+                            const isAssistant = msg.role === "assistant";
+
+                            return (
+                                <div
+                                    key={`${msg.timestamp.toISOString()}-${index}`}
+                                    className={`flex items-start gap-4 ${isAssistant ? "" : "justify-end"}`}
+                                >
+                                    {isAssistant && (
+                                        <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#1d4ed8]/40 bg-[#0d1a33] text-[#2f6bff]">
+                                            <Bot className="size-5" />
+                                        </div>
+                                    )}
+
+                                    <div className={`${isAssistant ? "max-w-3xl" : "max-w-4xl text-right"}`}>
+                                        <p className={`mb-3 text-sm font-semibold uppercase tracking-[0.28em] ${isAssistant ? "text-[#7c8aa4]" : "text-[#8fa3cc]"}`}>
+                                            {isAssistant ? "AI Coach" : "You"}
                                         </p>
+                                        <div
+                                            className={`rounded-3xl border px-7 py-6 text-lg leading-9 shadow-[0_16px_40px_rgba(0,0,0,0.28)] ${isAssistant ? "border-white/6 bg-[#11161f] text-[#eef2fa]" : "border-[#12387c] bg-[#09142d] text-[#eef4ff]"}`}
+                                        >
+                                            {msg.content}
+                                        </div>
+                                    </div>
+
+                                    {!isAssistant && (
+                                        <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#11161f]">
+                                            <Avatar />
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+
+                        {currentMessage && (
+                            <div className="flex items-start justify-end gap-4">
+                                <div className="max-w-4xl text-right">
+                                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.28em] text-[#8fa3cc]">You</p>
+                                    <div className="rounded-3xl border border-[#12387c] bg-[#09142d] px-7 py-6 text-lg leading-9 text-[#dfe9ff] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+                                        {currentMessage}
                                     </div>
                                 </div>
-                            )}
-                        </div>
+                                <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#11161f]">
+                                    <Avatar />
+                                </div>
+                            </div>
+                        )}
+
+                        {!transcription.length && !currentMessage && (
+                            <div className="rounded-[28px] border border-dashed border-white/10 bg-white/3 px-8 py-10 text-center">
+                                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-[#0d1a33] text-[#2f6bff]">
+                                    <Sparkles className="size-6" />
+                                </div>
+                                <p className="mt-5 text-lg text-[#dbe5f8]">No transcript yet.</p>
+                                <p className="mt-2 text-sm text-[#8693ab]">Start the session and the conversation will appear here live.</p>
+                            </div>
+                        )}
+
+                        {isConnecting && (
+                            <div className="flex items-start gap-4">
+                                <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#1d4ed8]/40 bg-[#0d1a33] text-[#2f6bff]">
+                                    <Bot className="size-5" />
+                                </div>
+                                <div className="max-w-xs rounded-[22px] border border-white/6 bg-[#11161f] px-6 py-5 text-[#b9c5dd] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+                                    <div className="flex items-center gap-3">
+                                        <LoaderCircle className="size-5 animate-spin text-[#2f6bff]" />
+                                        <span>Warming up your AI coach...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </section>
 
-                <section className="w-full flex items-center justify-between gap-6 pb-4">
-                    <button
-                        onClick={() => void stopCall()}
-                        className="flex-1 py-4 bg-[#282e39] rounded-xl text-red-500 flex items-center justify-center gap-2 hover:bg-red-500/10"
-                    >
-                        <Image
-                            src={icons.callEndRedIcons}
-                            alt="Call End Icon"
-                            width={24}
-                            height={24}
-                            className="text-red-500"
-                        />
-                        End Session
-                    </button>
+                <div className="mt-14 flex justify-center pb-4">
+                    <Button
+                        onClick={() => {
+                            if (isRecording) {
+                                void stopCall();
+                                return;
+                            }
 
+                            void startCall();
+                        }}
+                        className={`h-18 min-w-70 rounded-full px-10 text-lg font-semibold uppercase tracking-[0.18em] shadow-[0_22px_60px_rgba(0,0,0,0.35)] ${
+                            isRecording
+                                ? "border border-red-500/20 bg-[#2a1016] text-[#ff5a5a] hover:bg-[#391118]"
+                                : "border border-[#1d4ed8]/30 bg-[#0f2250] text-[#dce8ff] hover:bg-[#16306e]"
+                        }`}
+                    >
+                        {isRecording ? <PhoneOff className="size-5" /> : <Mic className="size-5" />}
+                        {isConnecting ? "Connecting..." : isRecording ? "End Session" : "Start Session"}
+                    </Button>
+                </div>
+
+                <div className="fixed right-6 bottom-6 z-30 md:right-10 md:bottom-10">
                     <button
                         onClick={toggleRecording}
-                        className={`w-20 h-20 rounded-full flex items-center justify-center transition-colors ${isRecording
-                            ? "bg-red-500 hover:bg-red-600"
-                            : "bg-blue-500 hover:bg-blue-600"
-                            }`}
+                        className={`flex size-18 items-center justify-center rounded-full border shadow-[0_18px_45px_rgba(0,0,0,0.35)] transition-all ${isRecording ? "border-red-500/20 bg-red-500 hover:bg-red-600" : "border-[#1d4ed8]/30 bg-[#2563eb] hover:bg-[#1d4ed8]"}`}
                     >
-                        <Image
-                            src={isRecording ? icons.callEndRedIcons : icons.micIcon}
-                            alt={isRecording ? "Stop Recording" : "Start Recording"}
-                            width={24}
-                            height={24}
-                            priority
-                        />
+                        {isConnecting ? (
+                            <LoaderCircle className="size-7 animate-spin text-white" />
+                        ) : isRecording ? (
+                            <PhoneOff className="size-7 text-white" />
+                        ) : (
+                            <Mic className="size-7 text-white" />
+                        )}
                     </button>
-
-                    <button className="flex-1 py-4 bg-[#282e39] rounded-xl flex items-center justify-center gap-2 text-white hover:bg-[#3a4151]">
-                        <Image
-                            src={icons.volumnUpIcons}
-                            alt="Volume Up Icon"
-                            width={24}
-                            height={24}
-                        />
-                        Audio Settings
-                    </button>
-                </section>
-            </main>
-        </div>
+                </div>
+            </section>
+        </main>
     );
 };
 

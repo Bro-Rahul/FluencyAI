@@ -34,6 +34,27 @@ export const formateDuration = (seconds: number) => {
 };
 
 
+export const formatDurationCompact = (seconds: number) => {
+    const safeSeconds = Math.max(0, Math.floor(seconds));
+    const hrs = Math.floor(safeSeconds / 3600);
+    const mins = Math.floor((safeSeconds % 3600) / 60);
+
+    if (hrs === 0) {
+        return `${mins}m`;
+    }
+
+    return `${hrs}h ${mins}m`;
+};
+
+
+export const formatMonthYear = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+    });
+};
+
+
 export function getDaysOfYear(year: number) {
     const start = dayjs(`${year}-01-01`)
     const end = dayjs(`${year}-12-31`)

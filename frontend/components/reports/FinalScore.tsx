@@ -9,7 +9,8 @@ import { Fragment } from 'react'
 interface FinalScoreProps {
     report: SessionReport,
     transcriptions: TranscriptionSchema[]
-    duration: number
+    duration: number,
+    streak: number
 }
 
 const formatTimestamp = (value: number) => {
@@ -41,7 +42,7 @@ const highlightText = (text: string, target: string, className: string) => {
     })
 }
 
-const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
+const FinalScore = ({ report, transcriptions, duration, streak }: FinalScoreProps) => {
     const totalSuggestions = report.grammar_corrections.length + report.vocabulary_enhancements.length
 
     return (
@@ -56,7 +57,7 @@ const FinalScore = ({ report, transcriptions, duration }: FinalScoreProps) => {
                 <StatCard label="Duration" value={`${formateDuration(duration)}s`} icon={svg.alarmSVG} />
                 <StatCard label="Avg Pace" value={`${report.avg_pace}`} icon={svg.pacingSVG} />
                 <StatCard label="Fillers" value={`${report.filler.total_count}`} icon={svg.graphicSVG} />
-                <StatCard label="Streak" value="5 Days" icon={svg.streakSVG} />
+                <StatCard label="Streak" value={`${streak} Days`} icon={svg.streakSVG} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">

@@ -6,6 +6,9 @@ export interface UserType {
     score: number,
     access_token: string,
     created_at: string,
+    avg: number,
+    streak: number,
+    total: number
 }
 
 

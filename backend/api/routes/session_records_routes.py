@@ -5,14 +5,15 @@ from api.crud.session_record import (
     list_sessions,
     list_pending_sessions,
     create_new_session,
-    get_user_statistics
+    get_user_statistics,
+    get_user_profile_summary
 )
 from api.db import get_db
 from api.auth import authenticated_user_token,authenticated_user
 from fastapi.encoders import jsonable_encoder
 import asyncio
 import json
-from api.schema.session_record_schema import SessionStatisticsSchema
+from api.schema.session_record_schema import SessionStatisticsSchema, SessionProfileSummarySchema
 from . import session_records_filter_routes
 
 router = APIRouter(prefix="/sessions")
@@ -62,3 +63,11 @@ def get_stats(
 ):
     result = get_user_statistics(db,user.id)
     return result
+
+
+@router.get("/profile-summary/", response_model=SessionProfileSummarySchema)
+def get_profile_stats(
+    user=Depends(authenticated_user),
+    db=Depends(get_db)
+):
+    return get_user_profile_summary(db, user.id)

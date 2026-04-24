@@ -1,56 +1,98 @@
 import svg from '@/constants/svgs'
 import Image from 'next/image'
 import images from '@/constants/images'
+import { UserType } from '@/types/users'
+import { UserProfileSummaryType } from '@/types/session'
+import { formatMonthYear } from '@/utils/helper'
 
-const ProfileCard = () => {
+interface ProfileCardProps {
+    user: UserType
+    avgScore: number,
+    summary: UserProfileSummaryType
+}
+
+const getProfileLevel = (score: number) => {
+    if (score >= 80) return "Advanced"
+    if (score >= 50) return "Intermediate"
+    if (score >= 20) return "Developing"
+    return "Beginner"
+}
+
+const ProfileCard = ({ user, summary, avgScore }: ProfileCardProps) => {
+    const avatar = user.avatar?.trim()
+    const joinedOn = formatMonthYear(user.created_at)
+    const lastPracticedOn = summary.last_session_at
+        ? new Date(summary.last_session_at).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+        })
+        : "No sessions yet"
+
     return (
         <div
             className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-[#1c1f27] p-8 rounded-2xl border border-[#282e39]">
             <div className="flex items-center gap-6">
                 <div className="relative">
-                    <Image
-                        src={images.profileImage}
-                        alt='profile'
-                        width={100}
-                        height={100}
-                        priority
-                        className='rounded-full border border-white p-0.5'
-                    />
+                    {avatar ? (
+                        <Image
+                            src={avatar}
+                            alt={user.username}
+                            width={100}
+                            height={100}
+                            className='rounded-full border border-white p-0.5 object-cover'
+                        />
+                    ) : (
+                        <Image
+                            src={images.pandaImage}
+                            alt='profile'
+                            width={100}
+                            height={100}
+                            priority
+                            className='rounded-full border border-white p-0.5'
+                        />
+                    )}
                     <div
                         className="absolute bottom-0 right-0 bg-[#135bec] p-1 rounded-full border-2 border-[#1c1f27]">
                         <Image src={svg.cameraSVG} alt='Profile Icon' />
                     </div>
                 </div>
                 <div className="flex flex-col gap-1">
-                    <h1 className="text-3xl font-bold text-white">Alex Morgan</h1>
-                    <div className="flex items-center gap-3 text-[#9da6b9] text-sm">
-                        <span className="flex items-center gap-1"><span
-                            className="material-symbols-outlined text-[18px]">mail</span>
-                            alex.morgan@example.com</span>
+                    <h1 className="text-3xl font-bold text-white">{user.username}</h1>
+                    <div className="flex flex-wrap items-center gap-3 text-[#9da6b9] text-sm">
+                        <span className="flex items-center gap-1">
+                            {user.email} </span>
                         <span className="size-1 bg-[#3b4354] rounded-full"></span>
-                        <span>Joined September 2023</span>
+                        <span>Joined {joinedOn}</span>
+                        <span className="size-1 bg-[#3b4354] rounded-full"></span>
+                        <span>Last practice {lastPracticedOn}</span>
                     </div>
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex flex-wrap gap-2 mt-2">
                         <span
-                            className="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-white uppercase tracking-wide">Level:
-                            B2 Intermediate</span>
+                            className="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-white uppercase tracking-wide">
+                            {getProfileLevel(avgScore * 10)} Level
+                        </span>
                         <span
-                            className="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-[#135bec] uppercase tracking-wide">Pro
-                            Member</span>
+                            className="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-[#135bec] uppercase tracking-wide">
+                            Score {avgScore.toFixed(1)}
+                        </span>
+                        <span
+                            className="px-2 py-0.5 rounded bg-[#282e39] border border-[#3b4354] text-xs font-bold text-[#22c55e] uppercase tracking-wide">
+                            {summary.practice_days} Practice Days
+                        </span>
                     </div>
                 </div>
             </div>
-            <div className="flex gap-3 w-full md:w-auto">
-                <button
-                    className="flex-1 md:flex-none items-center justify-center gap-2 bg-[#282e39] hover:bg-[#3b4354] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-colors border border-[#3b4354] flex">
-                    <Image src={svg.settingSVG} alt='setting icons' />
-                    Settings
-                </button>
-                <button
-                    className="flex-1 md:flex-none items-center justify-center gap-2 bg-[#135bec] hover:bg-[#1d64f2] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-colors flex">
-                    <Image src={svg.editSVG} alt='edit icons' />
-                    Edit Profile
-                </button>
+            <div className="w-full md:w-auto min-w-40 rounded-xl border border-[#282e39] px-5 py-4">
+                <div className="flex items-center gap-3">
+                    <div className="flex size-11 items-center justify-center rounded-full bg-orange-500/10">
+                        <Image src={svg.streakSVG} alt='streak icon' />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#9da6b9]">Max Streak</span>
+                        <span className="text-2xl font-bold text-white">{summary.streak} Days</span>
+                    </div>
+                </div>
             </div>
         </div>
     )

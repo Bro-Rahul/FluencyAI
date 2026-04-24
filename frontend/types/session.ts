@@ -19,3 +19,19 @@ export interface UserStatisticsType {
     avg: number,
     streak: number
 }
+
+
+export interface UserProfileSummaryType extends UserStatisticsType {
+    total_duration: number,
+    best_score: number,
+    practice_days: number,
+    weekly_duration: number,
+    weekly_sessions: number,
+    monthly_sessions: number,
+    monthly_active_days: number,
+    monthly_elapsed_days: number,
+    weekly_duration_share: number,
+    monthly_sessions_share: number,
+    monthly_active_days_share: number,
+    last_session_at: string | null
+}

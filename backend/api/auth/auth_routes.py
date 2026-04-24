@@ -25,6 +25,8 @@ from api.crud.users import (
     create_user,
     get_user_by_email
 ) 
+
+from api.crud.session_record import get_user_statistics
 from api.db import get_db
 from sqlmodel import Session
 from api.hasher import get_password_hash
@@ -60,9 +62,10 @@ def login_user(
             detail=str(e)
         )
     access_token = create_access_token(data={"sub": str(user.email)})
-
+    user_statistics = get_user_statistics(db,user.id)
     return {
         **user.model_dump(),
+        **user_statistics,
         "access_token": access_token,
     }
 
@@ -94,9 +97,11 @@ def social_login_user(
         db.refresh(user)
 
     access_token = create_access_token(data={"sub": str(user.email)})
+    user_statistics = get_user_statistics(db,user.id)
 
     return {
         **user.model_dump(),
+        **user_statistics,
         "access_token": access_token,
     }
 

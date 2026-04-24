@@ -15,6 +15,9 @@ class UserResponseSchema(BaseModel):
     avatar : str|None
     score : int
     created_at : datetime
+    avg:float
+    streak:int
+    total : int
 
 class UserHeatMapSchema(BaseModel):
     date: date

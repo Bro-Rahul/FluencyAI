@@ -50,6 +50,7 @@ const ReportPage = async ({ params }: ReportPageProps) => {
                 </TabsList>
                 <TabsContent value="finalScore" className="border-t-4 py-5 px-2">
                     <FinalScore
+                        streak={session!.user!.streak!}
                         transcriptions={response.transcriptions}
                         duration={response.duration}
                         report={response.report}
